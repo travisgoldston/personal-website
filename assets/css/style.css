@@ -435,6 +435,37 @@ h1, h2, h3, h4 {
   margin-bottom: var(--space-md);
 }
 
+/* Where I'm most useful */
+.useful-intro {
+  max-width: 36em;
+}
+
+.useful-list {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-4xl);
+}
+
+.useful-item {
+  padding-top: var(--space-2xl);
+}
+
+.useful-item:first-child {
+  padding-top: 0;
+}
+
+.useful-item + .useful-item {
+  border-top: 1px solid var(--border);
+}
+
+.useful-item-title {
+  font-size: 1.25rem;
+  font-weight: 600;
+  letter-spacing: -0.02em;
+  margin-bottom: var(--space-md);
+  color: var(--text-primary);
+}
+
 /* Responsive */
 @media (max-width: 640px) {
   .nav-links {
