@@ -1,15 +1,15 @@
 // Set active nav link based on current page + mobile menu toggle
 document.addEventListener('DOMContentLoaded', function () {
-  const path = window.location.pathname;
-  const page = path.split('/').pop() || 'index.html';
-  const isHome = page === '' || page === 'index.html';
+  const path = window.location.pathname.replace(/\/$/, '') || '/';
+  const isHome = path === '' || path === '/';
 
   if (isHome) {
     const logo = document.querySelector('.nav-logo');
     if (logo) logo.classList.add('active');
   } else {
     document.querySelectorAll('.nav-links a').forEach(function (link) {
-      if (link.getAttribute('href') === page) {
+      const href = link.getAttribute('href');
+      if (href === path || href === path + '/') {
         link.classList.add('active');
       }
     });
