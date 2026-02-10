@@ -1,0 +1,8 @@
+# Clean URLs: rewrite extension-less paths to .html (Netlify)
+/about    /about.html   200
+/useful   /useful.html  200
+/work     /work.html    200
+/writing  /writing.html 200
+/photography /photography.html 200
+/contact  /contact.html 200
+/*        /index.html   200
