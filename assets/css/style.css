@@ -524,6 +524,20 @@ h1, h2, h3, h4 {
   border-top: 1px solid var(--border);
 }
 
+.playgrounds-disclaimer {
+  margin-top: var(--space-3xl);
+  padding-top: var(--space-2xl);
+  border-top: 1px solid var(--border);
+}
+
+.playgrounds-disclaimer-text {
+  font-size: 0.875rem;
+  color: var(--text-muted);
+  line-height: 1.6;
+  margin: 0;
+  max-width: 42em;
+}
+
 @media (max-width: 768px) {
   .playgrounds-cards {
     grid-template-columns: 1fr;
