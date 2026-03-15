@@ -507,6 +507,10 @@ h1, h2, h3, h4 {
   object-fit: contain;
 }
 
+.playgrounds-page .playground-card-logo img.logo-boldspark {
+  max-width: 58%;
+}
+
 .playgrounds-page .playground-card-body {
   flex: 1;
   min-width: 0;
