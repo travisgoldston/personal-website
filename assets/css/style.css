@@ -577,6 +577,10 @@ h1, h2, h3, h4 {
   .playgrounds-page .playground-card-logo img {
     max-height: 280px;
   }
+
+  .playgrounds-page .playground-card-logo img.logo-boldspark {
+    max-width: 100%;
+  }
 }
 
 /* Forms */
