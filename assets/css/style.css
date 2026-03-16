@@ -346,6 +346,10 @@ h1, h2, h3, h4 {
   border-top: 1px solid var(--border);
 }
 
+.photography-gallery {
+  padding-top: var(--space-3xl);
+}
+
 /* Footer */
 .footer {
   padding: var(--space-4xl) var(--space-xl) var(--space-3xl);
