@@ -273,7 +273,7 @@
     perspective: 1200px;
   }
   .device-wrap{
-    transform: rotate(-7deg);
+    transform: rotate(-2.5deg);
     transform-style: preserve-3d;
     filter: drop-shadow(24px 34px 26px rgba(30,26,20,0.28));
     animation: float 6s ease-in-out infinite;
@@ -369,15 +369,15 @@
   }
   body.spinning .off-on-switch{ pointer-events: none; cursor: default; }
   @keyframes float{
-    0%,100%{ transform: rotate(-7deg) translateY(0px); }
-    50%{ transform: rotate(-7deg) translateY(-8px); }
+    0%,100%{ transform: rotate(-2.5deg) translateY(0px); }
+    50%{ transform: rotate(-2.5deg) translateY(-8px); }
   }
 
   .console{
     width: 320px;
     background: linear-gradient(160deg, #3a3a40 0%, #1c1c20 32%, #121214 68%, #070708 100%);
     border-radius: 16px 16px 34px 34px;
-    padding: 16px 16px 26px;
+    padding: 16px 16px 40px;
     position: relative;
     box-shadow:
       0 1px 0 rgba(255,255,255,0.16) inset,
@@ -582,8 +582,9 @@
     display:flex;
     justify-content:space-between;
     align-items:center;
-    padding: 20px 10px 0;
+    padding: 16px 36px 4px 8px;
     position:relative;
+    z-index: 1;
   }
 
   .dpad{ position:relative; width:74px; height:74px; }
@@ -608,6 +609,9 @@
     align-items:flex-end;
     gap:10px;
     transform: rotate(-18deg);
+    position: relative;
+    z-index: 2;
+    flex-shrink: 0;
   }
   .round-btn{
     width:32px; height:32px;
@@ -627,7 +631,9 @@
     display:flex;
     justify-content:center;
     gap:16px;
-    padding: 18px 0 2px;
+    padding: 14px 52px 10px 8px;
+    position: relative;
+    z-index: 1;
   }
   .pill-wrap{ display:flex; flex-direction:column; align-items:center; gap:4px; }
   .pill-btn{
@@ -644,12 +650,15 @@
 
   .speaker{
     position:absolute;
-    right: 14px; bottom: 6px;
+    right: 16px;
+    bottom: 14px;
     display:flex;
     gap:3px;
     transform: rotate(-18deg);
+    pointer-events: none;
+    z-index: 0;
   }
-  .speaker span{ width:2px; height:18px; background: #070708; box-shadow: 0 0 0 1px #2a2a2e; }
+  .speaker span{ width:2px; height:14px; background: #070708; box-shadow: 0 0 0 1px #2a2a2e; }
 
   /* ---------- right column ---------- */
   .how-to-play h3{
@@ -732,6 +741,9 @@
     color: var(--screen-darkest);
     text-decoration: underline;
     text-underline-offset: 2px;
+    pointer-events: auto;
+    position: relative;
+    z-index: 2;
   }
   .sr-only{
     position:absolute; width:1px; height:1px; padding:0; margin:-1px;
@@ -739,13 +751,15 @@
   }
   @media (max-width: 640px){
     .console{ width: min(94vw, 360px); }
-    .controls-row{ gap: 18px; padding: 18px 6px 0; }
-    .dpad{ width: 124px; height: 124px; }
-    .dpad .up,.dpad .down{ width: 38px; height: 46px; left: 43px; }
-    .dpad .left,.dpad .right{ width: 46px; height: 38px; top: 43px; }
-    .dpad .center{ width: 38px; height: 38px; top: 43px; left: 43px; }
-    .round-btn{ width: 44px; height: 44px; }
-    .device-wrap{ transform: rotate(-4deg); }
+    .controls-row{ gap: 14px; padding: 16px 44px 4px 6px; }
+    .dpad{ width: 118px; height: 118px; }
+    .dpad .up,.dpad .down{ width: 36px; height: 44px; left: 41px; }
+    .dpad .left,.dpad .right{ width: 44px; height: 36px; top: 41px; }
+    .dpad .center{ width: 36px; height: 36px; top: 41px; left: 41px; }
+    .round-btn{ width: 42px; height: 42px; }
+    .pill-row{ padding: 14px 58px 12px 6px; }
+    .speaker{ right: 12px; bottom: 12px; }
+    .device-wrap{ transform: rotate(-2deg); }
   }
   @media (prefers-reduced-motion: reduce){
     .device-wrap,
@@ -771,7 +785,7 @@
     <section class="hero-left site-ui">
       <span class="tag-pill">01 — The Pocket Edition</span>
       <h1 class="headline">Small screen.<em>Big experience.</em></h1>
-      <p class="sub-copy">A CX leader. An SEO builder. A lifelong Texan at heart. Welcome to my little world.</p>
+      <p class="sub-copy">I’m a VP of CX. An SEO and AI builder. Born and Raised Texan at heart. Welcome to my world.</p>
       <hr class="hr-line">
       <div class="signature-row">
         <span class="plus">+</span>
@@ -848,10 +862,10 @@
                     <div class="lvl-meta">ROMEX PEST · JUL 2026 — PRESENT</div>
                     <div class="inv-cat">OBJECTIVES</div>
                     <div class="badge-row">
-                      <span class="badge">CX</span><span class="badge">OPERATIONS</span><span class="badge">INSIDE SALES</span><span class="badge">RETENTION</span><span class="badge">GROWTH</span>
+                      <span class="badge">CX</span><span class="badge">OPERATIONS</span><span class="badge">INSIDE SALES</span><span class="badge">D2D SALES</span><span class="badge">RETENTION</span>
                     </div>
                     <div class="inv-cat">SCOPE</div>
-                    <div class="proj-desc">I lead inside sales, retention, and contact center operations for a national pest control company.</div>
+                    <div class="proj-desc">I lead inside sales, retention, and contact center operations for a national pest control company. I’m also responsible for the day-to-day operations and success of internal door-to-door sales.</div>
                     <div class="inv-cat">ON THIS LEVEL</div>
                     <ul class="tiny-list">
                       <li>Spearheaded putting the entire contact center on Zoom Contact Center and self-implemented the stack.</li>
@@ -866,7 +880,7 @@
                     <div class="lvl-title">DIRECTOR, CUSTOMER OPERATIONS</div>
                     <div class="lvl-meta">ROMEX PEST · JUL 2024 — JUL 2026</div>
                     <div class="inv-cat">SCOPE</div>
-                    <div class="proj-desc">Director of Customer Operations. Service plus sales plus the glue between them. Same company. Bigger map.</div>
+                    <div class="proj-desc">My task was to take what I’d done with inside sales and replicate it across Retention, Customer Service, and Scheduling.</div>
                     <div class="footer-hint">B — BACK</div>
                   </div>
 
@@ -874,7 +888,7 @@
                     <div class="lvl-kicker">LEVEL 06</div>
                     <div class="lvl-title">INSIDE SALES MANAGER</div>
                     <div class="lvl-meta">ROMEX PEST · NOV 2021 — JUL 2024</div>
-                    <div class="proj-desc">The job stopped being my book and started being everybody else’s. Coaching, pipeline, and making a team actually run.</div>
+                    <div class="proj-desc">I built this department from scratch. Then the job stopped being my book and started being everybody else’s — coaching, pipeline, and making a team actually run.</div>
                     <div class="footer-hint">B — BACK</div>
                   </div>
 
@@ -890,7 +904,7 @@
                     <div class="lvl-kicker">LEVEL 04</div>
                     <div class="lvl-title">CUSTOMER SERVICE REP</div>
                     <div class="lvl-meta">ROMEX PEST · APR 2019 — SEP 2019</div>
-                    <div class="proj-desc">First seat. Phones. Angry people. Where year eight started.</div>
+                    <div class="proj-desc">Year one. First seat. Phones. Where the ladder started.</div>
                     <div class="footer-hint">B — BACK</div>
                   </div>
 
@@ -924,9 +938,10 @@
                   <div class="page" data-page="proj-budgetocity">
                     <div class="lvl-title">BUDGETOCITY</div>
                     <div class="lvl-meta">SEO + CONTENT + SOCIAL</div>
-                    <div class="proj-desc">Social media management, content creation, and search. SEO plus content pushed organic ranking to page one of Google in this niche.</div>
+                    <div class="proj-desc">Social media management, content creation, AI automations, and email marketing. SEO plus content pushed organic ranking to page one of Google in this niche.</div>
                     <div class="inv-cat">WHAT I DID</div>
-                    <div class="badge-row"><span class="badge">SEO</span><span class="badge">CONTENT CREATION</span><span class="badge">SOCIAL MEDIA</span><span class="badge">COPY</span></div>
+                    <div class="badge-row"><span class="badge">SEO</span><span class="badge">CONTENT</span><span class="badge">SOCIAL MEDIA</span><span class="badge">AI AUTOMATIONS</span><span class="badge">EMAIL</span></div>
+                    <div class="proj-desc" style="margin-top:8px;"><a class="gb-link" href="https://www.budgetocity.com" target="_blank" rel="noopener noreferrer">budgetocity.com ↗</a></div>
                     <div class="footer-hint">B — BACK</div>
                   </div>
 
@@ -938,6 +953,7 @@
                     <div class="badge-row">
                       <span class="badge">SEO</span><span class="badge">LOCAL SEO</span><span class="badge">SMALL BIZ</span><span class="badge">NO PEST CONTROL</span>
                     </div>
+                    <div class="proj-desc" style="margin-top:8px;"><a class="gb-link" href="https://nobleseo.co" target="_blank" rel="noopener noreferrer">nobleseo.co ↗</a></div>
                     <div class="footer-hint">B — BACK</div>
                   </div>
 
@@ -945,7 +961,7 @@
                     <div class="lvl-title">BLUEBONNET GROWTH</div>
                     <div class="lvl-meta">HYPERLOCAL TEXAS · PLAYGROUND</div>
                     <div class="proj-desc">A hyperlocal Texas project to learn how to write copy and rank for a specific city. Also a playground to get better at SEO without pretending every experiment is a client deliverable.</div>
-                    <div class="proj-desc"><a class="gb-link" href="https://bluebonnetgrowth.com" target="_blank" rel="noopener noreferrer">bluebonnetgrowth.com</a></div>
+                    <div class="proj-desc" style="margin-top:8px;"><a class="gb-link" href="https://bluebonnetgrowth.com" target="_blank" rel="noopener noreferrer">bluebonnetgrowth.com ↗</a></div>
                     <div class="footer-hint">B — BACK</div>
                   </div>
 
@@ -1041,13 +1057,13 @@
               <button class="round-btn b-btn" id="btnB">B</button>
               <button class="round-btn" id="btnA">A</button>
             </div>
-            <div class="speaker"><span></span><span></span><span></span><span></span><span></span></div>
           </div>
 
           <div class="pill-row">
             <div class="pill-wrap"><button class="pill-btn" id="btnSelect"></button><span class="pill-label">SELECT</span></div>
             <div class="pill-wrap"><button class="pill-btn" id="btnStart"></button><span class="pill-label">START</span></div>
           </div>
+          <div class="speaker" aria-hidden="true"><span></span><span></span><span></span><span></span><span></span></div>
 
         </div>
         <div class="console-back" aria-hidden="true">
