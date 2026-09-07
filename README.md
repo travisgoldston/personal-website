@@ -5,7 +5,7 @@ An interactive handheld (“Pocketfolio”) homepage for [travisgoldston.com](ht
 ## Structure
 
 - **index.html** — Interactive Game Boy–style portfolio (home, about, work, toolkit, contact)
-- **quest.html** — Side quest: Frogger-style Main Street crossing
+- **quest.html** — Side quest: run Travis to the goal line on the same handheld
 - **assets/images/travis-sprite.png** — Pixel avatar used on Home, About, and the side quest
 - **about.html**, **work.html**, **writing.html**, **photography.html**, **useful.html**, **contact.html** — Additional routes (currently coming soon)
 

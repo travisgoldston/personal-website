@@ -2,38 +2,37 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<title>Side Quest — Cross Main Street</title>
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Side Quest — Goal Line</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
 <link rel="icon" type="image/svg+xml" href="/favicon.svg">
 <link rel="preconnect" href="https://fonts.googleapis.com">
-<link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&family=Inter:wght@400;600&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,600&family=Press+Start+2P&family=Inter:wght@400;600&display=swap" rel="stylesheet">
 <style>
   :root{
-    --bg: #0b0c0a;
-    --panel: #15170f;
-    --ink: #e8eed4;
-    --muted: #8b9270;
+    --bg: #0b0b0c;
+    --ink: #eceae4;
+    --muted: #8d8a84;
     --green: #2f9e4a;
-    --road: #3a3a3c;
+    --maroon: #7c3350;
+    --shell-hi: #3a3a40;
+    --bezel: #0c0c0e;
+    --bezel-dark: #050506;
+    --screen: #cdd3ae;
   }
   *{ box-sizing:border-box; }
   html,body{ margin:0; padding:0; background:var(--bg); color:var(--ink); font-family:'Inter',sans-serif; min-height:100vh; }
-  a{ color:inherit; }
-  .wrap{
-    max-width: 720px;
-    margin: 0 auto;
-    padding: 18px 16px 28px;
+  a{ color:inherit; text-decoration:none; }
+  button{ touch-action: manipulation; }
+  .page{
+    min-height:100vh;
     display:flex;
     flex-direction:column;
     align-items:center;
+    justify-content:center;
+    padding: 18px 12px 24px;
     gap: 14px;
-  }
-  .top{
-    width:100%;
-    display:flex;
-    justify-content:space-between;
-    align-items:center;
-    gap:12px;
+    user-select: none;
+    overscroll-behavior: none;
   }
   .back{
     font-family:'Press Start 2P', monospace;
@@ -41,37 +40,84 @@
     letter-spacing:1px;
     text-transform:uppercase;
     color: var(--muted);
-    text-decoration:none;
+    align-self:flex-start;
+    max-width: 420px;
+    width: min(92vw, 420px);
   }
   .back:hover{ color: var(--ink); }
-  h1{
-    font-family:'Press Start 2P', monospace;
-    font-size: 11px;
-    line-height:1.6;
-    margin:0;
-    text-align:center;
-  }
-  .hud{
-    width: min(100%, 520px);
-    display:flex;
-    justify-content:space-between;
+  .kicker{
     font-family:'Press Start 2P', monospace;
     font-size:8px;
+    letter-spacing:1px;
     color: var(--muted);
+    text-align:center;
+    margin:0;
+    line-height:1.7;
   }
-  .hud b{ color: var(--green); font-weight:400; }
-  .stage{
+
+  .device-stage{ display:flex; justify-content:center; width:100%; }
+  .console{
+    width: min(92vw, 400px);
+    background: linear-gradient(160deg, #3a3a40 0%, #1c1c20 32%, #121214 68%, #070708 100%);
+    border-radius: 16px 16px 34px 34px;
+    padding: 16px 16px 22px;
+    position: relative;
+    box-shadow:
+      0 1px 0 rgba(255,255,255,0.16) inset,
+      0 -12px 18px rgba(0,0,0,0.55) inset,
+      0 22px 32px rgba(0,0,0,0.38);
+  }
+  .top-controls{ display:flex; align-items:center; gap:10px; padding: 0 4px 10px; }
+  .off-on-switch{
+    width: 34px; height:12px;
+    background: #050505;
+    border-radius: 6px;
     position:relative;
-    width: min(100%, 520px);
-    background: #102010;
-    border: 4px solid #1e2416;
-    box-shadow: 0 18px 40px rgba(0,0,0,0.45);
-    image-rendering: pixelated;
+    box-shadow: inset 0 1px 3px #000;
   }
-  canvas{
-    display:block;
+  .off-on-switch::after{
+    content:"";
+    position:absolute; top:1px; left:22px;
+    width:10px; height:10px;
+    border-radius:50%;
+    background: linear-gradient(160deg, #d8d8de, #6a6a70);
+  }
+  .switch-label{
+    font-family:'Press Start 2P', monospace;
+    font-size: 5px;
+    color: #8d8a84;
+    letter-spacing:1px;
+  }
+  .bezel{
+    background: linear-gradient(160deg, var(--bezel), var(--bezel-dark));
+    border-radius: 8px 8px 30px 8px;
+    padding: 14px 14px 20px;
+    box-shadow: 0 6px 14px rgba(0,0,0,0.35) inset;
+  }
+  .bezel-label{
+    text-align:center;
+    font-family:'Press Start 2P', monospace;
+    font-size: 5px;
+    letter-spacing: 1.5px;
+    color: #6d6a64;
+    padding-bottom: 8px;
+  }
+  .screen-frame{ background:#111; border-radius:4px; padding:10px; }
+  .screen{
+    position:relative;
+    background: var(--screen);
+    aspect-ratio: 10/9;
+    overflow:hidden;
+    border-radius:2px;
+    color: #1c2414;
+    font-family:'Press Start 2P', monospace;
+    box-shadow: 0 0 10px rgba(50,60,30,0.5) inset;
+  }
+  .screen canvas{
+    position:absolute;
+    inset:0;
     width:100%;
-    height:auto;
+    height:100%;
     image-rendering: pixelated;
     image-rendering: crisp-edges;
   }
@@ -82,143 +128,212 @@
     align-items:center;
     justify-content:center;
     flex-direction:column;
-    gap:14px;
-    background: rgba(8,10,6,0.82);
+    gap:10px;
+    background: rgba(20,28,14,0.88);
     text-align:center;
-    padding: 20px;
+    padding: 12px;
+    z-index:2;
   }
   .overlay.show{ display:flex; }
   .overlay h2{
-    font-family:'Press Start 2P', monospace;
-    font-size:12px;
+    font-size:9px;
     line-height:1.7;
     margin:0;
+    color:#f4f1ea;
   }
   .overlay p{
     margin:0;
-    font-size:14px;
-    color: var(--muted);
-    max-width: 280px;
-  }
-  .btn{
-    font-family:'Press Start 2P', monospace;
-    font-size:8px;
-    padding: 10px 14px;
-    border:0;
-    background: var(--green);
-    color:#061108;
-    cursor:pointer;
-  }
-  .help{
-    font-size:13px;
-    color: var(--muted);
-    text-align:center;
-    margin:0;
-  }
-  .pad{
-    display:grid;
-    grid-template-columns: 56px 56px 56px;
-    grid-template-rows: 56px 56px 56px;
-    gap:6px;
-    margin-top: 4px;
-  }
-  .pad button{
-    border:0;
-    background:#1c2116;
-    color: var(--ink);
-    font-family:'Press Start 2P', monospace;
+    font-family:'Inter',sans-serif;
     font-size:12px;
+    color:#cdd3ae;
+    max-width: 220px;
+    line-height:1.4;
+  }
+  .overlay .hint{
+    font-size:6px;
+    color:#8b9270;
+    letter-spacing:1px;
+  }
+
+  .brand-row{
+    display:flex;
+    align-items:baseline;
+    justify-content:space-between;
+    padding: 14px 8px 0;
+  }
+  .device-wordmark{
+    font-family:'Playfair Display', serif;
+    font-style: italic;
+    font-weight:600;
+    font-size: 13px;
+    color: #eceae4;
+  }
+  .device-sub{
+    font-family:'Press Start 2P', monospace;
+    font-size: 4.5px;
+    color: #8d8a84;
+    letter-spacing:1px;
+  }
+  .controls-row{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    padding: 18px 8px 0;
+    position:relative;
+  }
+  .dpad{ position:relative; width:96px; height:96px; }
+  .dpad-btn{
+    position:absolute;
+    background: linear-gradient(160deg, #4a4a4a, #232323);
+    border:none;
+    box-shadow: 0 2px 0 #111;
     cursor:pointer;
+    min-width: 40px;
+    min-height: 40px;
+  }
+  .dpad .up,.dpad .down{ width:32px; height:36px; left:32px; }
+  .dpad .left,.dpad .right{ width:36px; height:32px; top:32px; }
+  .dpad .up{ top:0; border-radius:4px 4px 0 0; }
+  .dpad .down{ bottom:0; border-radius:0 0 4px 4px; }
+  .dpad .left{ left:0; border-radius:4px 0 0 4px; }
+  .dpad .right{ right:0; border-radius:0 4px 4px 0; }
+  .dpad .center{ position:absolute; width:34px; height:34px; top:31px; left:31px; background:#2b2b2b; pointer-events:none; }
+  .ab-buttons{
+    display:flex;
+    align-items:flex-end;
+    gap:12px;
+    transform: rotate(-12deg);
+  }
+  .round-btn{
+    width:48px; height:48px;
+    border-radius:50%;
+    border:none;
+    background: radial-gradient(circle at 35% 30%, #a2536c, var(--maroon) 60%, #5a2439 100%);
+    box-shadow: 0 3px 0 #401a2b, 0 5px 6px rgba(0,0,0,0.35);
+    color: rgba(255,255,255,0.7);
+    font-family:'Press Start 2P', monospace;
+    font-size:10px;
+    cursor:pointer;
+  }
+  .round-btn:active{ box-shadow: 0 1px 0 #401a2b; transform: translateY(2px); }
+  .b-btn{ margin-bottom:12px; }
+  .pill-row{ display:flex; justify-content:center; gap:16px; padding: 16px 0 2px; }
+  .pill-wrap{ display:flex; flex-direction:column; align-items:center; gap:4px; }
+  .pill-btn{
+    width:36px; height:12px;
+    background: linear-gradient(160deg,#5a5a5a,#333);
     border-radius:6px;
+    transform: rotate(-18deg);
+    border:none;
+    cursor:pointer;
+    box-shadow: 0 2px 0 #1c1c1c;
   }
-  .pad button:active{ background:#2a3320; }
-  .pad .up{ grid-column:2; grid-row:1; }
-  .pad .left{ grid-column:1; grid-row:2; }
-  .pad .right{ grid-column:3; grid-row:2; }
-  .pad .down{ grid-column:2; grid-row:3; }
-  @media (min-width: 720px){
-    .pad{ display:none; }
+  .pill-label{ font-family:'Press Start 2P', monospace; font-size:4.5px; color:#8d8a84; letter-spacing:1px; }
+  .speaker{
+    position:absolute;
+    right: 10px; bottom: 4px;
+    display:flex;
+    gap:3px;
+    transform: rotate(-18deg);
   }
+  .speaker span{ width:2px; height:18px; background:#070708; box-shadow: 0 0 0 1px #2a2a2e; }
 </style>
 </head>
 <body>
-  <div class="wrap">
-    <div class="top">
-      <a class="back" href="/">← Portfolio</a>
-      <h1>Side Quest</h1>
-      <span></span>
-    </div>
-    <div class="hud">
-      <span>LIVES <b id="lives">3</b></span>
-      <span>CROSS MAIN STREET</span>
-    </div>
-    <div class="stage">
-      <canvas id="game" width="520" height="640"></canvas>
-      <div class="overlay" id="overlay">
-        <h2 id="overlayTitle">Ready?</h2>
-        <p id="overlayCopy">Get Travis across town without becoming a hood ornament.</p>
-        <button class="btn" id="overlayBtn">Start</button>
+  <div class="page">
+    <a class="back" href="/index.html">← Back home</a>
+    <p class="kicker">Get the ball across the goal line.</p>
+
+    <section class="device-stage">
+      <div class="console">
+        <div class="top-controls">
+          <div class="off-on-switch" aria-hidden="true"></div>
+          <span class="switch-label">OFF&nbsp;&nbsp;ON</span>
+        </div>
+        <div class="bezel">
+          <div class="bezel-label">SIDE QUEST — GOAL LINE</div>
+          <div class="screen-frame">
+            <div class="screen">
+              <canvas id="game" width="240" height="216"></canvas>
+              <div class="overlay show" id="overlay">
+                <h2 id="overlayTitle">Goal line</h2>
+                <p id="overlayCopy">You have the ball. Run Travis upfield. Sidestep the tacklers.</p>
+                <div class="hint">A — HIKE &nbsp;&nbsp; B — BACK</div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="brand-row">
+          <div class="device-wordmark">Travis Goldston</div>
+          <div class="device-sub">PORTFOLIO SYSTEM</div>
+        </div>
+        <div class="controls-row">
+          <div class="dpad">
+            <button class="dpad-btn up" data-dir="up" aria-label="Up"></button>
+            <button class="dpad-btn down" data-dir="down" aria-label="Down"></button>
+            <button class="dpad-btn left" data-dir="left" aria-label="Left"></button>
+            <button class="dpad-btn right" data-dir="right" aria-label="Right"></button>
+            <div class="center"></div>
+          </div>
+          <div class="ab-buttons">
+            <button class="round-btn b-btn" id="btnB">B</button>
+            <button class="round-btn" id="btnA">A</button>
+          </div>
+          <div class="speaker"><span></span><span></span><span></span><span></span><span></span></div>
+        </div>
+        <div class="pill-row">
+          <div class="pill-wrap"><button class="pill-btn" id="btnSelect"></button><span class="pill-label">SELECT</span></div>
+          <div class="pill-wrap"><button class="pill-btn" id="btnStart"></button><span class="pill-label">START</span></div>
+        </div>
       </div>
-    </div>
-    <p class="help">Arrow keys or WASD. Reach the shops on the far sidewalk.</p>
-    <div class="pad" aria-label="On-screen d-pad">
-      <button class="up" data-dir="up">▲</button>
-      <button class="left" data-dir="left">◀</button>
-      <button class="right" data-dir="right">▶</button>
-      <button class="down" data-dir="down">▼</button>
-    </div>
+    </section>
+    <p class="kicker">D-pad to run. A to hike. B to go home.</p>
   </div>
 <script>
-  const TILE = 40;
-  const COLS = 13;
-  const ROWS = 16;
+  const TILE = 16;
+  const COLS = 15;
+  const ROWS = 13;
   const canvas = document.getElementById('game');
   const ctx = canvas.getContext('2d');
   const overlay = document.getElementById('overlay');
   const overlayTitle = document.getElementById('overlayTitle');
   const overlayCopy = document.getElementById('overlayCopy');
-  const overlayBtn = document.getElementById('overlayBtn');
-  const livesEl = document.getElementById('lives');
 
   const sprite = new Image();
   sprite.src = '/assets/images/travis-sprite.png';
 
-  const START = { c: 6, r: 14 };
-  const GOAL_ROW = 2;
+  const START = { c: 7, r: 11 };
+  const GOAL_ROW = 1;
 
   const lanes = [
-    { row: 4, dir: 1, speed: 70, w: 52, gap: 160, color: '#c4453c' },
-    { row: 5, dir: -1, speed: 110, w: 44, gap: 150, color: '#d6b03a' },
-    { row: 6, dir: 1, speed: 90, w: 58, gap: 170, color: '#3d6fb3' },
-    { row: 8, dir: -1, speed: 100, w: 48, gap: 155, color: '#e8e4da' },
-    { row: 9, dir: 1, speed: 125, w: 40, gap: 140, color: '#6b3fa0' },
-    { row: 10, dir: -1, speed: 80, w: 62, gap: 180, color: '#2f8f4a' }
+    { row: 3, dir: 1, speed: 42, gap: 88, color: '#1f3a73' },
+    { row: 4, dir: -1, speed: 58, gap: 80, color: '#c4453c' },
+    { row: 6, dir: 1, speed: 50, gap: 92, color: '#f4efe2' },
+    { row: 7, dir: -1, speed: 64, gap: 76, color: '#1f3a73' },
+    { row: 9, dir: 1, speed: 46, gap: 84, color: '#c4453c' },
+    { row: 10, dir: -1, speed: 70, gap: 72, color: '#1f3a73' }
   ];
 
-  let cars = [];
+  let tacklers = [];
   let player = { c: START.c, r: START.r };
-  let lives = 3;
+  let downs = 3;
   let running = false;
   let last = 0;
   let moveLock = false;
   let flash = 0;
+  let invuln = 0;
 
-  function rowType(r){
-    if(r <= 1) return 'building';
-    if(r === 2 || r === 11 || r === 14) return 'walk';
-    if(r === 3 || r === 7 || r === 12 || r === 13 || r === 15) return 'grass';
-    return 'road';
+  function goHome(){
+    window.location.href = '/index.html';
   }
 
-  function resetCars(){
-    cars = [];
+  function resetTacklers(){
+    tacklers = [];
     lanes.forEach((lane, i) => {
-      const count = 3;
-      for(let n = 0; n < count; n++){
-        cars.push({
-          x: n * lane.gap + (i * 30),
-          lane,
-          w: lane.w
+      for(let n = 0; n < 3; n++){
+        tacklers.push({
+          x: n * lane.gap + (i * 18),
+          lane
         });
       }
     });
@@ -229,18 +344,16 @@
     moveLock = false;
   }
 
-  function showOverlay(title, copy, btn){
+  function showOverlay(title, copy){
     overlayTitle.textContent = title;
     overlayCopy.textContent = copy;
-    overlayBtn.textContent = btn;
     overlay.classList.add('show');
     running = false;
   }
 
   function startGame(){
-    lives = 3;
-    livesEl.textContent = lives;
-    resetCars();
+    downs = 3;
+    resetTacklers();
     resetPlayer();
     overlay.classList.remove('show');
     running = true;
@@ -248,11 +361,8 @@
     requestAnimationFrame(loop);
   }
 
-  function render(){
-    ctx.clearRect(0, 0, canvas.width, canvas.height);
-    drawTown();
-    drawCars();
-    drawPlayer();
+  function pressA(){
+    if(!running) startGame();
   }
 
   function hop(dc, dr){
@@ -260,35 +370,33 @@
     const nc = player.c + dc;
     const nr = player.r + dr;
     if(nc < 0 || nc >= COLS || nr < 0 || nr >= ROWS) return;
-    if(rowType(nr) === 'building') return;
     player.c = nc;
     player.r = nr;
     moveLock = true;
-    setTimeout(() => { moveLock = false; }, 110);
+    setTimeout(() => { moveLock = false; }, 90);
     if(player.r <= GOAL_ROW){
-      showOverlay('You made it!', 'Travis crossed Main Street. The shops are open and the coffee is on.', 'Play again');
+      showOverlay('Touchdown!', 'Travis got the ball across the goal line.');
     }
   }
 
-  function squash(){
+  function tackled(){
+    if(invuln > 0) return;
     flash = 180;
-    lives -= 1;
-    livesEl.textContent = Math.max(lives, 0);
-    if(lives <= 0){
-      showOverlay('Splat.', 'A sedan had other plans. Try the crossing again.', 'Retry');
+    invuln = 700;
+    downs -= 1;
+    if(downs <= 0){
+      showOverlay('Tackled.', 'Fourth down. Hike it again and try for the goal line.');
     }else{
       resetPlayer();
     }
   }
 
   function playerBox(){
-    const padX = 8;
-    const padY = 4;
     return {
-      x: player.c * TILE + padX,
-      y: player.r * TILE + padY,
-      w: TILE - padX * 2,
-      h: TILE - padY * 2
+      x: player.c * TILE + 3,
+      y: player.r * TILE + 2,
+      w: TILE - 6,
+      h: TILE - 3
     };
   }
 
@@ -296,103 +404,79 @@
     return a.x < b.x + b.w && a.x + a.w > b.x && a.y < b.y + b.h && a.y + a.h > b.y;
   }
 
-  function drawTown(){
+  function drawField(){
     for(let r = 0; r < ROWS; r++){
       for(let c = 0; c < COLS; c++){
         const x = c * TILE;
         const y = r * TILE;
-        const type = rowType(r);
-        if(type === 'building'){
-          ctx.fillStyle = r === 0 ? '#5a4638' : '#6d5544';
-          ctx.fillRect(x, y, TILE, TILE);
-        }else if(type === 'walk'){
-          ctx.fillStyle = '#cfc8b4';
-          ctx.fillRect(x, y, TILE, TILE);
-          ctx.fillStyle = '#b9b19c';
-          if((c + r) % 2 === 0) ctx.fillRect(x, y, TILE, TILE);
-        }else if(type === 'grass'){
-          ctx.fillStyle = (c + r) % 2 ? '#4f8a3d' : '#467e36';
-          ctx.fillRect(x, y, TILE, TILE);
+        if(r <= 1){
+          ctx.fillStyle = r === 0 ? '#7c3350' : '#6a2c44';
         }else{
-          ctx.fillStyle = '#3a3a3c';
-          ctx.fillRect(x, y, TILE, TILE);
+          ctx.fillStyle = ((r + c) % 2) ? '#3d8f3a' : '#347a32';
         }
+        ctx.fillRect(x, y, TILE, TILE);
       }
     }
+    ctx.fillStyle = '#f4efe2';
+    for(let r = 2; r < ROWS; r += 2){
+      ctx.fillRect(0, r * TILE, canvas.width, 1);
+    }
+    ctx.fillRect(0, 2 * TILE - 1, canvas.width, 2);
+    ctx.fillStyle = '#f4efe2';
+    ctx.font = '8px "Press Start 2P"';
+    ctx.fillText('GOAL', 92, 18);
 
-    // building details
-    const shops = [
-      { c: 1, label: 'CAFE', color: '#8b3a3a' },
-      { c: 5, label: 'HOME', color: '#3d5c8a' },
-      { c: 9, label: 'SEO', color: '#2f6b45' }
-    ];
-    shops.forEach(shop => {
-      ctx.fillStyle = shop.color;
-      ctx.fillRect(shop.c * TILE, 0, TILE * 3, TILE * 2);
-      ctx.fillStyle = '#f0e2b0';
-      for(let i = 0; i < 2; i++){
-        ctx.fillRect(shop.c * TILE + 10 + i * 22, 10, 12, 12);
-        ctx.fillRect(shop.c * TILE + 10 + i * 22, 28, 12, 12);
-      }
-      ctx.fillStyle = '#1a120c';
-      ctx.fillRect(shop.c * TILE + 22, 52, 16, 28);
-      ctx.fillStyle = '#f4efe2';
-      ctx.font = '8px "Press Start 2P"';
-      ctx.fillText(shop.label, shop.c * TILE + 8, 22);
-    });
-
-    // road lines
-    ctx.fillStyle = '#d6c56a';
-    [4,5,6,8,9,10].forEach(r => {
-      for(let c = 0; c < COLS; c++){
-        if(c % 2 === 0) ctx.fillRect(c * TILE + 8, r * TILE + TILE - 3, 18, 3);
-      }
-    });
-    // median
-    ctx.fillStyle = '#d7a53a';
-    ctx.fillRect(0, 7 * TILE + 16, canvas.width, 6);
-
-    // crosswalk
-    ctx.fillStyle = '#f2efe6';
-    [4,5,6,8,9,10].forEach(r => {
-      for(let i = 0; i < 5; i++){
-        ctx.fillRect(6 * TILE + 6, r * TILE + 4 + i * 7, 28, 4);
-      }
-    });
-
-    // trees
-    [[0,12],[12,12],[0,15],[12,15],[2,13],[10,13]].forEach(([c,r]) => {
-      ctx.fillStyle = '#2c5a28';
-      ctx.fillRect(c * TILE + 8, r * TILE + 6, 24, 20);
-      ctx.fillStyle = '#6b4a2a';
-      ctx.fillRect(c * TILE + 16, r * TILE + 24, 8, 12);
-    });
+    ctx.fillStyle = 'rgba(20,28,14,0.55)';
+    ctx.fillRect(2, 200, 92, 14);
+    ctx.fillStyle = '#f4efe2';
+    ctx.font = '6px "Press Start 2P"';
+    ctx.fillText('DOWNS ' + Math.max(downs, 0), 6, 210);
   }
 
-  function drawCars(){
-    cars.forEach(car => {
-      const y = car.lane.row * TILE + 8;
-      ctx.fillStyle = '#111';
-      ctx.fillRect(car.x - 2, y + 18, car.w + 4, 6);
-      ctx.fillStyle = car.lane.color;
-      ctx.fillRect(car.x, y, car.w, 22);
-      ctx.fillStyle = '#9ad4e8';
-      const wx = car.lane.dir === 1 ? car.x + car.w - 16 : car.x + 4;
-      ctx.fillRect(wx, y + 4, 12, 8);
+  function drawTackler(x, y, color){
+    ctx.fillStyle = color === '#f4efe2' ? '#1c1c1c' : color;
+    ctx.fillRect(x + 5, y + 1, 10, 7);
+    ctx.fillStyle = '#111';
+    ctx.fillRect(x + 7, y + 3, 6, 3);
+    ctx.fillStyle = color;
+    ctx.fillRect(x + 4, y + 8, 12, 9);
+    ctx.fillStyle = '#3a2a1a';
+    ctx.fillRect(x + 5, y + 17, 10, 5);
+    ctx.fillStyle = '#111';
+    ctx.fillRect(x + 4, y + 22, 4, 3);
+    ctx.fillRect(x + 12, y + 22, 4, 3);
+  }
+
+  function drawTacklers(){
+    tacklers.forEach(t => {
+      drawTackler(t.x, t.lane.row * TILE - 2, t.lane.color);
     });
   }
 
   function drawPlayer(){
-    const x = player.c * TILE + 4;
-    const y = player.r * TILE - 6;
+    const x = player.c * TILE + 1;
+    const y = player.r * TILE - 8;
     if(flash > 0 && Math.floor(flash / 40) % 2 === 0) return;
     if(sprite.complete && sprite.naturalWidth){
       ctx.imageSmoothingEnabled = false;
-      ctx.drawImage(sprite, x, y, 32, 46);
+      ctx.drawImage(sprite, x, y, 14, 24);
     }else{
-      ctx.fillStyle = '#111';
-      ctx.fillRect(x + 8, y + 4, 16, 36);
+      ctx.fillStyle = '#c4a574';
+      ctx.fillRect(x + 4, y + 4, 8, 16);
     }
+    ctx.fillStyle = '#8a4e24';
+    ctx.beginPath();
+    ctx.ellipse(x + 13, y + 14, 4, 3, -0.4, 0, Math.PI * 2);
+    ctx.fill();
+    ctx.fillStyle = '#f4efe2';
+    ctx.fillRect(x + 12, y + 13, 3, 1);
+  }
+
+  function render(){
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+    drawField();
+    drawTacklers();
+    drawPlayer();
   }
 
   function loop(now){
@@ -400,19 +484,22 @@
     const dt = Math.min(0.04, (now - last) / 1000);
     last = now;
     if(flash > 0) flash -= dt * 1000;
+    if(invuln > 0) invuln -= dt * 1000;
 
-    cars.forEach(car => {
-      car.x += car.lane.dir * car.lane.speed * dt;
-      if(car.lane.dir === 1 && car.x > canvas.width + 20) car.x = -car.w - 10;
-      if(car.lane.dir === -1 && car.x < -car.w - 20) car.x = canvas.width + 10;
+    tacklers.forEach(t => {
+      t.x += t.lane.dir * t.lane.speed * dt;
+      if(t.lane.dir === 1 && t.x > canvas.width + 8) t.x = -18;
+      if(t.lane.dir === -1 && t.x < -20) t.x = canvas.width + 6;
     });
 
-    const box = playerBox();
-    for(const car of cars){
-      const carBox = { x: car.x, y: car.lane.row * TILE + 8, w: car.w, h: 22 };
-      if(hit(box, carBox)){
-        squash();
-        break;
+    if(invuln <= 0){
+      const box = playerBox();
+      for(const t of tacklers){
+        const tb = { x: t.x + 4, y: t.lane.row * TILE, w: 12, h: 14 };
+        if(hit(box, tb)){
+          tackled();
+          break;
+        }
       }
     }
 
@@ -420,29 +507,38 @@
     requestAnimationFrame(loop);
   }
 
-  const dirs = {
-    ArrowUp: [0, -1], ArrowDown: [0, 1], ArrowLeft: [-1, 0], ArrowRight: [1, 0],
-    w: [0, -1], a: [-1, 0], s: [0, 1], d: [1, 0]
-  };
+  const dirMap = { up: [0,-1], down: [0,1], left: [-1,0], right: [1,0] };
+  function bindPress(el, fn){
+    const fire = (e) => { e.preventDefault(); fn(); };
+    el.addEventListener('pointerdown', fire);
+  }
+
+  document.querySelectorAll('.dpad-btn').forEach(btn => {
+    bindPress(btn, () => hop(...dirMap[btn.dataset.dir]));
+  });
+  bindPress(document.getElementById('btnA'), pressA);
+  bindPress(document.getElementById('btnB'), goHome);
+  bindPress(document.getElementById('btnSelect'), goHome);
+  bindPress(document.getElementById('btnStart'), pressA);
+
   document.addEventListener('keydown', (e) => {
     const key = e.key.length === 1 ? e.key.toLowerCase() : e.key;
-    if(dirs[key]){
+    if(dirMap[key] || key === 'ArrowUp' || key === 'ArrowDown' || key === 'ArrowLeft' || key === 'ArrowRight' || key === 'w' || key === 'a' || key === 's' || key === 'd'){
       e.preventDefault();
-      hop(dirs[key][0], dirs[key][1]);
+      const map = {
+        ArrowUp: [0,-1], ArrowDown: [0,1], ArrowLeft: [-1,0], ArrowRight: [1,0],
+        w: [0,-1], a: [-1,0], s: [0,1], d: [1,0]
+      };
+      hop(...(map[key] || [0,0]));
     }
+    if(e.key === 'Enter' || key === 'z'){ e.preventDefault(); pressA(); }
+    if(e.key === 'Backspace' || key === 'x'){ e.preventDefault(); goHome(); }
   });
-  document.querySelectorAll('.pad button').forEach(btn => {
-    btn.addEventListener('click', () => {
-      const map = { up: [0,-1], down: [0,1], left: [-1,0], right: [1,0] };
-      hop(...map[btn.dataset.dir]);
-    });
-  });
-  overlayBtn.addEventListener('click', startGame);
-  resetCars();
+
+  resetTacklers();
   resetPlayer();
   sprite.onload = render;
   render();
-  showOverlay('Main Street', 'Guide Travis across town. Cars do not stop. Shops wait on the other side.', 'Start');
 </script>
 </body>
 </html>
