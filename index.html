@@ -1,45 +1,945 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <link rel="icon" type="image/svg+xml" href="/favicon.svg">
-  <title>Coming Soon</title>
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;600&display=swap" rel="stylesheet">
-  <style>
-    :root {
-      color-scheme: light;
-      font-family: "DM Sans", -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
-      background: #ffffff;
-      color: #18181b;
-    }
+<meta charset="UTF-8">
+<title>Travis Goldston — Pocketfolio</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="description" content="An interactive handheld portfolio for Travis Goldston — CX leadership, growth, and local SEO.">
+<link rel="icon" type="image/svg+xml" href="/favicon.svg">
+<meta property="og:title" content="Travis Goldston — Pocketfolio">
+<meta property="og:description" content="A CX leader. An SEO builder. A lifelong Texan at heart. Welcome to my little world.">
+<meta property="og:image" content="/assets/images/travis-sprite.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,500;0,700;1,500;1,600&family=Inter:wght@400;500;600&family=Press+Start+2P&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg: #f3f0ea;
+    --ink: #1c1b19;
+    --muted: #726d63;
+    --line: #d9d3c4;
 
-    * {
-      box-sizing: border-box;
-    }
+    --shell: #161618;
+    --shell-hi: #2e2e32;
+    --shell-lo: #0a0a0c;
+    --shell-shadow: #000000;
 
-    body {
-      margin: 0;
-      min-height: 100vh;
-      display: grid;
-      place-items: center;
-      padding: 2rem;
-    }
+    --bezel: #0c0c0e;
+    --bezel-dark: #050506;
 
-    h1 {
-      margin: 0;
-      font-size: clamp(2.5rem, 8vw, 5rem);
-      line-height: 1;
-      letter-spacing: -0.05em;
-      text-align: center;
-    }
-  </style>
+    --screen: #cdd3ae;
+    --screen-dark: #4a5638;
+    --screen-darkest: #333d26;
+
+    --maroon: #7c3350;
+    --maroon-dark: #5a2439;
+    --green: #2f9e4a;
+  }
+
+  *{ box-sizing:border-box; }
+  html,body{ margin:0; padding:0; }
+  body{
+    background: var(--bg);
+    color: var(--ink);
+    font-family:'Inter', sans-serif;
+    min-height:100vh;
+    transition: background 0.85s ease, color 0.85s ease;
+  }
+  a{ color:inherit; text-decoration:none; }
+
+  /* ---------- boot sequence ---------- */
+  body.boot{
+    background: #000;
+    color: #f4f1ea;
+    overflow: hidden;
+  }
+  body.boot .site-ui,
+  body.powering .site-ui{
+    display: none !important;
+  }
+  body.boot .hero{
+    grid-template-columns: 1fr;
+    min-height: 100vh;
+    padding: 32px 20px;
+  }
+  body.boot .device-stage{ perspective: 1400px; }
+  body.boot.spinning .device-wrap{
+    animation: console-spin 2.4s linear infinite;
+    filter: drop-shadow(0 28px 40px rgba(0,0,0,0.75));
+  }
+  body.boot.await-power .device-wrap{
+    transform: rotateX(6deg) rotateY(-16deg);
+    animation: none;
+    filter: drop-shadow(0 28px 40px rgba(0,0,0,0.75));
+  }
+  @keyframes console-spin{
+    0%{ transform: rotateX(8deg) rotateY(0deg); }
+    100%{ transform: rotateX(8deg) rotateY(360deg); }
+  }
+  body.boot .screen{
+    background: #030303;
+    box-shadow: none;
+  }
+  body.boot .screen::before,
+  body.boot .screen-inner{ opacity: 0; }
+  body.boot .dpad-btn,
+  body.boot .round-btn,
+  body.boot .pill-btn{ pointer-events: none; }
+  .boot-hint{
+    display:none;
+    margin-left: auto;
+    font-family:'Press Start 2P', monospace;
+    font-size: 8px;
+    letter-spacing: 1px;
+    color: #f3f0ea;
+    text-transform: uppercase;
+    animation: hint-pulse 1.2s ease-in-out infinite;
+    white-space: nowrap;
+  }
+  body.await-power .boot-hint{ display:block; }
+  @keyframes hint-pulse{
+    0%,100%{ opacity: 1; }
+    50%{ opacity: 0.35; }
+  }
+  body.screen-off .screen{
+    background: #030303;
+    box-shadow: none;
+  }
+  body.screen-off .screen::before,
+  body.screen-off .screen-inner{ opacity: 0; }
+  body.screen-off .boot-hint{ display:block; }
+  body.screen-off .off-on-switch{
+    box-shadow: 0 0 0 3px rgba(47,158,74,0.35), inset 0 1px 3px #000;
+  }
+  @keyframes screen-wake{
+    from{ filter: brightness(0); }
+    to{ filter: brightness(1); }
+  }
+  body.on .site-ui{
+    animation: chrome-in 0.7s ease both;
+  }
+  @keyframes chrome-in{
+    from{ opacity: 0; transform: translateY(8px); }
+    to{ opacity: 1; transform: none; }
+  }
+
+  /* ---------- top nav ---------- */
+  .topnav{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    padding: 26px 48px 0;
+    font-size: 11px;
+    letter-spacing: 1.2px;
+    text-transform: uppercase;
+    color: var(--muted);
+  }
+  .logo{
+    font-family:'Playfair Display', serif;
+    font-size: 20px;
+    color: var(--ink);
+    letter-spacing: 0;
+    text-transform:none;
+    display:flex;
+    align-items:center;
+    gap:6px;
+  }
+  .logo-mark{
+    display:inline-flex;
+    gap:2px;
+  }
+  .logo-mark span{
+    width:5px; height:5px;
+    background: var(--maroon);
+    display:block;
+  }
+  .logo-mark span:first-child{ margin-top:6px; }
+  .status{ display:flex; align-items:center; gap:6px; }
+  .status::before{ content:"★"; font-size:10px; color: var(--maroon); }
+
+  .subtag{
+    text-align:center;
+    font-size: 10px;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: var(--muted);
+    margin: 10px 0 0;
+  }
+  .subtag::before{ content:"● "; color: var(--maroon); }
+
+  /* ---------- hero grid ---------- */
+  .hero{
+    display:grid;
+    grid-template-columns: 1fr 1.5fr 1fr;
+    align-items:center;
+    gap: 20px;
+    max-width: 1440px;
+    margin: 0 auto;
+    padding: 40px 48px 80px;
+  }
+
+  @media (max-width: 980px){
+    .hero{ grid-template-columns: 1fr; padding: 20px 24px 60px; }
+    .hero-left, .hero-right{ text-align:center; }
+    .topnav{ flex-direction:column; gap:10px; padding: 20px 24px 0; text-align:center; }
+  }
+
+  /* ---------- left column ---------- */
+  .tag-pill{
+    display:inline-block;
+    border: 1px solid var(--line);
+    border-radius: 3px;
+    padding: 4px 9px;
+    font-size: 10px;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    color: var(--muted);
+    margin-bottom: 22px;
+  }
+  .headline{
+    font-family:'Playfair Display', serif;
+    font-weight:700;
+    font-size: 46px;
+    line-height:1.15;
+    margin: 0 0 18px;
+  }
+  .headline em{
+    font-style: italic;
+    font-weight:500;
+    color: var(--green);
+    display:block;
+  }
+  .sub-copy{
+    font-size: 14.5px;
+    line-height:1.7;
+    color: var(--muted);
+    max-width: 320px;
+    margin-bottom: 26px;
+  }
+  .hr-line{
+    width: 40px;
+    border: none;
+    border-top: 1px solid var(--line);
+    margin: 0 0 20px;
+  }
+  .signature-row{
+    display:flex;
+    align-items:center;
+    gap:10px;
+    margin-bottom: 46px;
+  }
+  .signature-row .plus{ color: var(--maroon); font-size:14px; }
+  .sig-name{ font-size: 12px; font-weight:600; letter-spacing:0.5px; }
+  .sig-role{ font-size: 10.5px; color: var(--muted); letter-spacing:0.5px; text-transform:uppercase; }
+
+  .explore-note{
+    font-family:'Playfair Display', serif;
+    font-style: italic;
+    font-size: 16px;
+    color: var(--ink);
+    display:flex;
+    align-items:center;
+    gap:10px;
+  }
+  .try-arrow{
+    width: 52px;
+    height: 26px;
+    color: var(--green);
+    flex-shrink:0;
+  }
+  @media (max-width: 980px){
+    .explore-note{ justify-content:center; }
+    .try-arrow{ transform: rotate(90deg); }
+  }
+
+  /* ---------- center: device ---------- */
+  .device-stage{
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    perspective: 1200px;
+  }
+  .device-wrap{
+    transform: rotate(-7deg);
+    transform-style: preserve-3d;
+    filter: drop-shadow(24px 34px 26px rgba(30,26,20,0.28));
+    animation: float 6s ease-in-out infinite;
+  }
+  body.spinning .off-on-switch{ pointer-events: none; cursor: default; }
+  @keyframes float{
+    0%,100%{ transform: rotate(-7deg) translateY(0px); }
+    50%{ transform: rotate(-7deg) translateY(-8px); }
+  }
+
+  .console{
+    width: 320px;
+    background: linear-gradient(160deg, #3a3a40 0%, #1c1c20 32%, #121214 68%, #070708 100%);
+    border-radius: 16px 16px 34px 34px;
+    padding: 16px 16px 26px;
+    position: relative;
+    box-shadow:
+      0 1px 0 rgba(255,255,255,0.16) inset,
+      0 -12px 18px rgba(0,0,0,0.55) inset,
+      0 22px 32px rgba(0,0,0,0.38);
+  }
+
+  .top-controls{
+    display:flex;
+    align-items:center;
+    gap:10px;
+    padding: 0 4px 10px;
+  }
+  .off-on-switch{
+    width: 34px; height:12px;
+    background: #050505;
+    border-radius: 6px;
+    position:relative;
+    border: 0;
+    padding: 0;
+    cursor: pointer;
+    box-shadow: inset 0 1px 3px #000;
+  }
+  .off-on-switch::after{
+    content:"";
+    position:absolute; top:1px; left:1px;
+    width:10px; height:10px;
+    border-radius:50%;
+    background: linear-gradient(160deg, #d8d8de, #6a6a70);
+    transition: left 0.25s ease;
+  }
+  .off-on-switch.is-on::after{ left: 22px; }
+  body.await-power .off-on-switch{
+    box-shadow: 0 0 0 3px rgba(47,158,74,0.35), inset 0 1px 3px #000;
+  }
+  .switch-label{
+    font-family:'Press Start 2P', monospace;
+    font-size: 5px;
+    color: #8d8a84;
+    letter-spacing:1px;
+  }
+
+  .bezel{
+    background: linear-gradient(160deg, var(--bezel), var(--bezel-dark));
+    border-radius: 8px 8px 30px 8px;
+    padding: 14px 14px 20px;
+    box-shadow: 0 6px 14px rgba(0,0,0,0.35) inset;
+  }
+
+  .bezel-label{
+    text-align:center;
+    font-family:'Press Start 2P', monospace;
+    font-size: 5px;
+    letter-spacing: 1.5px;
+    color: #6d6a64;
+    padding-bottom: 8px;
+  }
+
+  .screen-frame{
+    background: #111;
+    border-radius: 4px;
+    padding: 10px;
+  }
+  .screen{
+    position:relative;
+    background: var(--screen);
+    aspect-ratio: 10/9;
+    overflow:hidden;
+    border-radius:2px;
+    color: var(--screen-darkest);
+    font-family:'Press Start 2P', monospace;
+    box-shadow: 0 0 10px rgba(50,60,30,0.5) inset;
+  }
+  .screen::before{
+    content:"";
+    position:absolute; inset:0;
+    background: repeating-linear-gradient(to bottom, rgba(51,61,38,0.08) 0px, rgba(51,61,38,0.08) 1px, transparent 1px, transparent 3px);
+    pointer-events:none;
+  }
+  .screen-inner{
+    position:absolute; inset:0;
+    padding: 8px 8px;
+    display:flex;
+    flex-direction:column;
+    overflow-y:auto;
+  }
+  .screen-inner::-webkit-scrollbar{ width:0; }
+
+  .status-row{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    font-size: 6.5px;
+    padding-bottom:6px;
+  }
+  .hearts{ letter-spacing:1px; color: var(--maroon-dark); }
+
+  .card-row{
+    display:flex;
+    align-items:center;
+    gap:8px;
+    padding: 4px 0 8px;
+    border-bottom: 1px solid rgba(51,61,38,0.35);
+    margin-bottom: 7px;
+  }
+  .avatar{
+    width: 24px; height: 36px;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    flex-shrink:0;
+    overflow:hidden;
+  }
+  .avatar svg, .portrait svg{ display:block; width:100%; height:100%; }
+  .portrait{
+    width: 56px; height: 94px;
+    margin: 0 auto 8px;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    overflow:hidden;
+  }
+  .avatar img, .portrait img{
+    display:block;
+    width:100%;
+    height:100%;
+    object-fit:contain;
+    image-rendering: pixelated;
+    image-rendering: crisp-edges;
+  }
+  .card-name{ font-size: 8px; line-height:1.5; }
+  .card-role{ font-size: 5.5px; color: var(--screen-dark); letter-spacing:0.5px; }
+
+  .page{ display:none; flex-direction:column; flex:1; }
+  .page.active{ display:flex; }
+
+  .menu-item{
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    padding: 5px 3px;
+    font-size: 7px;
+    cursor:pointer;
+  }
+  .menu-item .left{ display:flex; align-items:center; gap:6px; }
+  .menu-item .arrow{ opacity:0; width:8px; }
+  .menu-item.selected{ background: rgba(51,61,38,0.12); }
+  .menu-item.selected .arrow{ opacity:1; }
+  .menu-item .num{ color: var(--screen-dark); font-size:6px; }
+
+  .footer-hint{
+    margin-top:auto;
+    font-size: 5.5px;
+    text-align:center;
+    padding-top:8px;
+    color: var(--screen-dark);
+  }
+
+  .body-copy{ font-family:'Press Start 2P', monospace; font-size:6.5px; line-height:2; }
+  .sub-heading{ font-size:7px; margin-bottom:8px; }
+
+  .proj{ margin-bottom:9px; }
+  .proj-title{ font-size:6.5px; margin-bottom:3px; }
+  .proj-desc{ font-family:'Inter',sans-serif; font-size:9px; line-height:1.4; color: var(--screen-darkest); }
+  .proj-tag{
+    display:inline-block;
+    font-size:5px;
+    background: var(--screen-darkest);
+    color: var(--screen);
+    padding:2px 4px;
+    margin: 3px 3px 0 0;
+  }
+
+  .stat-row{ display:flex; align-items:center; gap:6px; margin-bottom:6px; }
+  .stat-name{ width:62px; font-size:5.5px; flex-shrink:0; }
+  .stat-track{ flex:1; height:6px; background: rgba(51,61,38,0.2); }
+  .stat-fill{ height:100%; background: var(--screen-darkest); }
+
+  /* ---------- lower shell ---------- */
+  .brand-row{
+    display:flex;
+    align-items:baseline;
+    justify-content:space-between;
+    padding: 14px 8px 0;
+  }
+  .device-wordmark{
+    font-family:'Playfair Display', serif;
+    font-style: italic;
+    font-weight:600;
+    font-size: 13px;
+    color: #eceae4;
+    white-space: nowrap;
+  }
+  .device-sub{
+    font-family:'Press Start 2P', monospace;
+    font-size: 4.5px;
+    color: #8d8a84;
+    letter-spacing:1px;
+  }
+
+  .controls-row{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    padding: 20px 10px 0;
+    position:relative;
+  }
+
+  .dpad{ position:relative; width:74px; height:74px; }
+  .dpad-btn{
+    position:absolute;
+    background: linear-gradient(160deg, #4a4a4a, #232323);
+    border:none;
+    box-shadow: 0 2px 0 #111;
+  }
+  .dpad .up,.dpad .down{ width:24px; height:26px; left:25px; }
+  .dpad .left,.dpad .right{ width:26px; height:24px; top:25px; }
+  .dpad .up{ top:0; border-radius:3px 3px 0 0; }
+  .dpad .down{ bottom:0; border-radius:0 0 3px 3px; }
+  .dpad .left{ left:0; border-radius:3px 0 0 3px; }
+  .dpad .right{ right:0; border-radius:0 3px 3px 0; }
+  .dpad .center{ position:absolute; width:26px; height:26px; top:24px; left:24px; background:#2b2b2b; }
+
+  .ab-buttons{
+    display:flex;
+    align-items:flex-end;
+    gap:10px;
+    transform: rotate(-18deg);
+  }
+  .round-btn{
+    width:32px; height:32px;
+    border-radius:50%;
+    border:none;
+    background: radial-gradient(circle at 35% 30%, #a2536c, var(--maroon) 60%, var(--maroon-dark) 100%);
+    box-shadow: 0 3px 0 #401a2b, 0 5px 6px rgba(0,0,0,0.35);
+    color: rgba(255,255,255,0.55);
+    font-family:'Press Start 2P', monospace;
+    font-size:9px;
+    cursor:pointer;
+  }
+  .round-btn:active{ box-shadow: 0 1px 0 #401a2b; transform: translateY(2px); }
+  .b-btn{ margin-bottom:10px; }
+
+  .pill-row{
+    display:flex;
+    justify-content:center;
+    gap:16px;
+    padding: 18px 0 2px;
+  }
+  .pill-wrap{ display:flex; flex-direction:column; align-items:center; gap:4px; }
+  .pill-btn{
+    width:32px; height:9px;
+    background: linear-gradient(160deg,#5a5a5a,#333);
+    border-radius:6px;
+    transform: rotate(-18deg);
+    border:none;
+    cursor:pointer;
+    box-shadow: 0 2px 0 #1c1c1c;
+  }
+  .pill-btn:active{ box-shadow:none; transform: rotate(-18deg) translateY(2px); }
+  .pill-label{ font-family:'Press Start 2P', monospace; font-size:4.5px; color:#8d8a84; letter-spacing:1px; }
+
+  .speaker{
+    position:absolute;
+    right: 14px; bottom: 6px;
+    display:flex;
+    gap:3px;
+    transform: rotate(-18deg);
+  }
+  .speaker span{ width:2px; height:18px; background: #070708; box-shadow: 0 0 0 1px #2a2a2e; }
+
+  /* ---------- right column ---------- */
+  .how-to-play h3{
+    font-size: 11px;
+    letter-spacing: 1.5px;
+    text-transform:uppercase;
+    color: var(--muted);
+    margin: 0 0 22px;
+  }
+  .htp-row{
+    display:flex;
+    align-items:flex-start;
+    gap:14px;
+    margin-bottom: 22px;
+  }
+  .htp-icon{
+    width: 30px; height:30px;
+    border-radius:50%;
+    border: 1px solid var(--line);
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    flex-shrink:0;
+    font-size: 11px;
+    color: var(--maroon);
+  }
+  .htp-title{ font-size: 13px; font-weight:600; margin-bottom:2px; }
+  .htp-desc{ font-size: 12px; color: var(--muted); }
+
+  .htp-note{
+    font-size: 10px;
+    letter-spacing:1px;
+    text-transform:uppercase;
+    color: var(--line);
+    margin: 20px 0 30px;
+  }
+
+  .side-quest{
+    display:flex;
+    align-items:center;
+    gap:12px;
+    border-top: 1px solid var(--line);
+    padding-top: 20px;
+    cursor:pointer;
+  }
+  .side-quest .icon{ font-size:18px; }
+  .side-quest-title{ font-size:13px; font-weight:600; }
+  .side-quest-desc{ font-size:11px; color:var(--muted); }
+  .side-quest .arrow{ margin-left:auto; color:var(--muted); }
+
+  .mini-dpad{ display:inline-grid; grid-template-columns:repeat(3,6px); grid-template-rows:repeat(3,6px); gap:1px; }
+  .mini-dpad span{ background:transparent; }
+  .mini-dpad span.on{ background: var(--maroon); }
+</style>
 </head>
-<body>
-  <main>
-    <h1>coming soon!</h1>
+<body class="boot spinning">
+
+  <header class="topnav site-ui">
+    <div class="logo"><span class="logo-mark"><span></span><span></span></span>travisgoldston<span style="color:var(--maroon)">.</span></div>
+    <div>An Interactive Portfolio</div>
+    <div class="status">Open to New Projects</div>
+  </header>
+  <div class="subtag site-ui">Less scroll. More play.</div>
+
+  <main class="hero">
+
+    <!-- LEFT -->
+    <section class="hero-left site-ui">
+      <span class="tag-pill">01 — The Pocket Edition</span>
+      <h1 class="headline">Small screen.<em>Big experience.</em></h1>
+      <p class="sub-copy">A CX leader. An SEO builder. A lifelong Texan at heart. Welcome to my little world.</p>
+      <hr class="hr-line">
+      <div class="signature-row">
+        <span class="plus">+</span>
+        <div>
+          <div class="sig-name">Travis Goldston</div>
+          <div class="sig-role">CX Leadership &amp; Growth</div>
+        </div>
+      </div>
+      <div class="explore-note">
+        Try me
+        <svg class="try-arrow" viewBox="0 0 52 24" fill="none" stroke="currentColor" stroke-width="1.7" aria-hidden="true">
+          <path d="M3 12h40" stroke-linecap="round"/>
+          <path d="M34 5l15 7-15 7" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+      </div>
+    </section>
+
+    <!-- CENTER: DEVICE -->
+    <section class="device-stage">
+      <div class="device-wrap">
+        <div class="console">
+
+          <div class="top-controls">
+            <button type="button" class="off-on-switch" id="powerSwitch" aria-label="Turn screen on or off"></button>
+            <span class="switch-label">OFF&nbsp;&nbsp;ON</span>
+            <span class="boot-hint">Turn on</span>
+          </div>
+
+          <div class="bezel">
+            <div class="bezel-label">NOT MATCHED WITH PERSONALITY</div>
+            <div class="screen-frame">
+              <div class="screen">
+                <div class="screen-inner" id="screenInner">
+
+                  <div class="status-row">
+                    <span>PLAYER 01</span>
+                    <span class="hearts">♥ ♥ ♥</span>
+                  </div>
+
+                  <!-- HOME -->
+                  <div class="page active" data-page="home">
+                    <div class="card-row">
+                      <div class="avatar"><img src="/assets/images/travis-sprite.png" alt="Pixel sprite of Travis" style="width:100%;height:100%;object-fit:contain;border-radius:2px;"></div>
+                      <div>
+                        <div class="card-name">TRAVIS<br>GOLDSTON</div>
+                        <div class="card-role">CX LEADER + SEO</div>
+                      </div>
+                    </div>
+                    <div class="menu-item selected" data-target="about"><span class="left"><span class="arrow">▶</span>ABOUT ME</span><span class="num">01</span></div>
+                    <div class="menu-item" data-target="projects"><span class="left"><span class="arrow">▶</span>SELECTED WORK</span><span class="num">02</span></div>
+                    <div class="menu-item" data-target="skills"><span class="left"><span class="arrow">▶</span>MY TOOLKIT</span><span class="num">03</span></div>
+                    <div class="menu-item" data-target="contact"><span class="left"><span class="arrow">▶</span>SAY HELLO</span><span class="num">04</span></div>
+                    <div class="footer-hint">● A LITTLE CURIOUS? PRESS A.</div>
+                  </div>
+
+                  <!-- ABOUT -->
+                  <div class="page" data-page="about">
+                    <div class="portrait"><img src="/assets/images/travis-sprite.png" alt="Pixel sprite of Travis" style="width:100%;height:100%;object-fit:contain;border-radius:2px;"></div>
+                    <div class="sub-heading" style="text-align:center;">ABOUT ME</div>
+                    <div class="proj-desc">
+                      I lead inside sales, retention, and contact center operations for a national pest control company — and run a boutique local SEO agency on the side. Based in Eagle Mountain, UT. Raised in Fort Worth, TX.
+                    </div>
+                    <div class="footer-hint">B — BACK TO MENU</div>
+                  </div>
+
+                  <!-- PROJECTS -->
+                  <div class="page" data-page="projects">
+                    <div class="sub-heading">SELECTED WORK</div>
+                    <div class="proj">
+                      <div class="proj-title">&gt; NOBLE SEO</div>
+                      <div class="proj-desc">Boutique local SEO agency for DFW-area businesses.</div>
+                      <span class="proj-tag">LOCAL SEO</span><span class="proj-tag">GBP</span>
+                    </div>
+                    <div class="proj">
+                      <div class="proj-title">&gt; CX OPS OVERHAUL</div>
+                      <div class="proj-desc">Rebuilt inside sales &amp; retention workflows at scale.</div>
+                      <span class="proj-tag">CONTACT CTR</span>
+                    </div>
+                    <div class="proj">
+                      <div class="proj-title">&gt; CALL CENTER ANALYTICS</div>
+                      <div class="proj-desc">Dashboards tracking conversion, AHT, and CSAT.</div>
+                      <span class="proj-tag">ANALYTICS</span>
+                    </div>
+                    <div class="footer-hint">B — BACK TO MENU</div>
+                  </div>
+
+                  <!-- SKILLS -->
+                  <div class="page" data-page="skills">
+                    <div class="sub-heading">MY TOOLKIT</div>
+                    <div class="stat-row"><span class="stat-name">CONTACT CTR</span><span class="stat-track"><span class="stat-fill" style="width:95%"></span></span></div>
+                    <div class="stat-row"><span class="stat-name">INSIDE SALES</span><span class="stat-track"><span class="stat-fill" style="width:90%"></span></span></div>
+                    <div class="stat-row"><span class="stat-name">RETENTION</span><span class="stat-track"><span class="stat-fill" style="width:88%"></span></span></div>
+                    <div class="stat-row"><span class="stat-name">LOCAL SEO</span><span class="stat-track"><span class="stat-fill" style="width:80%"></span></span></div>
+                    <div class="stat-row"><span class="stat-name">CX ANALYTICS</span><span class="stat-track"><span class="stat-fill" style="width:85%"></span></span></div>
+                    <div class="footer-hint">B — BACK TO MENU</div>
+                  </div>
+
+                  <!-- CONTACT -->
+                  <div class="page" data-page="contact">
+                    <div class="sub-heading">SAY HELLO</div>
+                    <div class="proj-desc">
+                      SITE: travisgoldston.com<br>
+                      EMAIL: travis@travisgoldston.com<br>
+                      LINKEDIN: /in/travisgoldston<br><br>
+                      Press START to save this cartridge to your bookmarks!
+                    </div>
+                    <div class="footer-hint">B — BACK TO MENU</div>
+                  </div>
+
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="brand-row">
+            <div class="device-wordmark">Travis Goldston</div>
+            <div class="device-sub">PORTFOLIO SYSTEM</div>
+          </div>
+
+          <div class="controls-row">
+            <div class="dpad">
+              <button class="dpad-btn up" data-dir="up" aria-label="Up"></button>
+              <button class="dpad-btn down" data-dir="down" aria-label="Down"></button>
+              <button class="dpad-btn left" data-dir="left" aria-label="Left"></button>
+              <button class="dpad-btn right" data-dir="right" aria-label="Right"></button>
+              <div class="center"></div>
+            </div>
+            <div class="ab-buttons">
+              <button class="round-btn b-btn" id="btnB">B</button>
+              <button class="round-btn" id="btnA">A</button>
+            </div>
+            <div class="speaker"><span></span><span></span><span></span><span></span><span></span></div>
+          </div>
+
+          <div class="pill-row">
+            <div class="pill-wrap"><button class="pill-btn" id="btnSelect"></button><span class="pill-label">SELECT</span></div>
+            <div class="pill-wrap"><button class="pill-btn" id="btnStart"></button><span class="pill-label">START</span></div>
+          </div>
+
+        </div>
+      </div>
+    </section>
+
+    <!-- RIGHT -->
+    <section class="hero-right how-to-play site-ui">
+      <h3>How To Play</h3>
+
+      <div class="htp-row">
+        <div class="htp-icon">
+          <div class="mini-dpad">
+            <span></span><span class="on"></span><span></span>
+            <span class="on"></span><span></span><span class="on"></span>
+            <span></span><span class="on"></span><span></span>
+          </div>
+        </div>
+        <div>
+          <div class="htp-title">Find your way</div>
+          <div class="htp-desc">D-pad or arrow keys</div>
+        </div>
+      </div>
+
+      <div class="htp-row">
+        <div class="htp-icon">A</div>
+        <div>
+          <div class="htp-title">Take a look</div>
+          <div class="htp-desc">A button or Z key</div>
+        </div>
+      </div>
+
+      <div class="htp-row">
+        <div class="htp-icon">B</div>
+        <div>
+          <div class="htp-title">Go back a little</div>
+          <div class="htp-desc">B button or X key</div>
+        </div>
+      </div>
+
+      <div class="htp-row">
+        <div class="htp-icon">✎</div>
+        <div>
+          <div class="htp-title">Make yourself at home</div>
+          <div class="htp-desc">Start or Enter key</div>
+        </div>
+      </div>
+
+      <div class="htp-note">No controller required</div>
+
+      <a class="side-quest" href="/quest.html">
+        <span class="icon">🎮</span>
+        <div>
+          <div class="side-quest-title">A little side quest?</div>
+          <div class="side-quest-desc">Get the ball across the goal line.</div>
+        </div>
+        <span class="arrow">↗</span>
+      </a>
+    </section>
+
   </main>
+
+<script>
+  const menuItems = Array.from(document.querySelectorAll('.menu-item'));
+  const pages = Array.from(document.querySelectorAll('.page'));
+  const powerSwitch = document.getElementById('powerSwitch');
+  let selectedIndex = 0;
+  let poweredOn = false;
+
+  function isOn(){
+    return poweredOn;
+  }
+
+  function powerOn(){
+    if(poweredOn) return;
+    poweredOn = true;
+    powerSwitch.classList.add('is-on');
+    document.body.classList.remove('spinning', 'screen-off');
+    const fromBoot = document.body.classList.contains('boot');
+    try{ sessionStorage.setItem('pocketfolioOn', '1'); }catch(e){}
+    if(fromBoot){
+      document.body.classList.add('powering', 'await-power');
+      window.setTimeout(() => {
+        document.body.classList.remove('boot', 'powering', 'spinning', 'await-power');
+        document.body.classList.add('on');
+      }, 420);
+    }else{
+      document.body.classList.add('on');
+    }
+  }
+
+  function powerOff(){
+    if(!poweredOn) return;
+    if(document.body.classList.contains('boot')) return;
+    poweredOn = false;
+    powerSwitch.classList.remove('is-on');
+    document.body.classList.remove('on');
+    document.body.classList.add('screen-off');
+  }
+
+  function skipBoot(){
+    poweredOn = true;
+    powerSwitch.classList.add('is-on');
+    document.body.classList.remove('boot', 'spinning', 'await-power', 'powering', 'screen-off');
+    document.body.classList.add('on');
+  }
+
+  try{
+    if(sessionStorage.getItem('pocketfolioOn') === '1'){
+      skipBoot();
+    }else{
+      window.setTimeout(() => {
+        if(poweredOn) return;
+        document.body.classList.remove('spinning');
+        document.body.classList.add('await-power');
+      }, 2600);
+    }
+  }catch(e){
+    window.setTimeout(() => {
+      if(poweredOn) return;
+      document.body.classList.remove('spinning');
+      document.body.classList.add('await-power');
+    }, 2600);
+  }
+
+  powerSwitch.addEventListener('click', () => {
+    if(poweredOn) powerOff();
+    else powerOn();
+  });
+
+  function updateSelection(){
+    menuItems.forEach((item,i) => item.classList.toggle('selected', i === selectedIndex));
+  }
+  function showPage(name){
+    pages.forEach(p => p.classList.toggle('active', p.dataset.page === name));
+  }
+  function goHome(){ showPage('home'); }
+  function selectCurrent(){
+    const activePage = document.querySelector('.page.active');
+    if(activePage.dataset.page === 'home'){
+      showPage(menuItems[selectedIndex].dataset.target);
+    }
+  }
+
+  menuItems.forEach((item,i) => {
+    item.addEventListener('click', () => {
+      if(!isOn()) return;
+      selectedIndex = i;
+      updateSelection();
+      showPage(item.dataset.target);
+    });
+  });
+
+  document.querySelectorAll('.dpad-btn').forEach(btn => {
+    btn.addEventListener('click', () => {
+      if(!isOn()) return;
+      const onHome = document.querySelector('.page.active').dataset.page === 'home';
+      if(!onHome) return;
+      const dir = btn.dataset.dir;
+      if(dir === 'up'){ selectedIndex = (selectedIndex - 1 + menuItems.length) % menuItems.length; }
+      if(dir === 'down'){ selectedIndex = (selectedIndex + 1) % menuItems.length; }
+      updateSelection();
+    });
+  });
+
+  document.getElementById('btnA').addEventListener('click', () => { if(isOn()) selectCurrent(); });
+  document.getElementById('btnB').addEventListener('click', () => { if(isOn()) goHome(); });
+  document.getElementById('btnSelect').addEventListener('click', () => { if(isOn()) goHome(); });
+  document.getElementById('btnStart').addEventListener('click', () => { if(isOn()) showPage('contact'); });
+
+  document.addEventListener('keydown', (e) => {
+    if(!isOn()){
+      if(e.key === 'Enter' || e.key === ' '){
+        e.preventDefault();
+        powerOn();
+      }
+      return;
+    }
+    const onHome = document.querySelector('.page.active').dataset.page === 'home';
+    if(e.key === 'ArrowUp' && onHome){ selectedIndex = (selectedIndex - 1 + menuItems.length) % menuItems.length; updateSelection(); }
+    if(e.key === 'ArrowDown' && onHome){ selectedIndex = (selectedIndex + 1) % menuItems.length; updateSelection(); }
+    if(e.key === 'Enter' || e.key.toLowerCase() === 'z'){ selectCurrent(); }
+    if(e.key === 'Backspace' || e.key.toLowerCase() === 'x'){ goHome(); }
+  });
+
+  updateSelection();
+</script>
+
 </body>
 </html>

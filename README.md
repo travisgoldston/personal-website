@@ -1,15 +1,13 @@
 # Travis Goldston — Personal Website
 
-A clean, minimal personal website built with HTML and CSS.
+An interactive handheld (“Pocketfolio”) homepage for [travisgoldston.com](https://travisgoldston.com).
 
 ## Structure
 
-- **index.html** — Home with hero and CTAs
-- **about.html** — Story-driven About page
-- **work.html** — Projects and case studies
-- **writing.html** — Blog-style notes
-- **photography.html** — Image gallery
-- **contact.html** — Contact form
+- **index.html** — Interactive Game Boy–style portfolio (home, about, work, toolkit, contact)
+- **quest.html** — Side quest: run Travis to the goal line on the same handheld
+- **assets/images/travis-sprite.png** — Pixel avatar used on Home, About, and the side quest
+- **about.html**, **work.html**, **writing.html**, **photography.html**, **useful.html**, **contact.html** — Additional routes (currently coming soon)
 
 ## Local Development
 

@@ -14,6 +14,7 @@ RewriteRule ^work/?$     work.html     [L]
 RewriteRule ^writing/?$  writing.html  [L]
 RewriteRule ^photography/?$ photography.html [L]
 RewriteRule ^contact/?$  contact.html  [L]
+RewriteRule ^quest/?$    quest.html    [L]
 
 # Optional: redirect old .html URLs to clean URLs (SEO)
 RewriteCond %{THE_REQUEST} \s/+([^.]+)\.html[\s?] [NC]
