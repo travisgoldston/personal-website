@@ -71,23 +71,39 @@
     min-height: 100vh;
     padding: 32px 20px;
   }
-  body.boot .device-stage{ perspective: 1400px; }
+  body.boot .device-stage{ perspective: 900px; }
   body.boot.spinning .device-wrap{
     animation: none;
     transform: none;
-    filter: drop-shadow(0 28px 40px rgba(0,0,0,0.75));
+    filter: none;
+    transform-style: preserve-3d;
+  }
+  body.boot.spinning .device-wrap::after{
+    content: "";
+    position: absolute;
+    left: 14%;
+    right: 14%;
+    bottom: -40px;
+    height: 28px;
+    background: radial-gradient(ellipse at center, rgba(0,0,0,0.55), transparent 70%);
+    pointer-events: none;
+    z-index: -1;
   }
   body.boot.spinning .device-3d{
-    animation: console-spin 3.4s linear infinite;
+    animation: console-spin 3.6s linear infinite;
   }
   body.boot.await-power .device-wrap{
-    transform: rotateX(6deg) rotateY(-16deg);
+    transform: none;
     animation: none;
-    filter: drop-shadow(0 28px 40px rgba(0,0,0,0.75));
+    filter: none;
+    transform-style: preserve-3d;
+  }
+  body.boot.await-power .device-3d{
+    transform: rotateX(12deg) rotateY(-28deg);
   }
   @keyframes console-spin{
-    0%{ transform: rotateX(8deg) rotateY(0deg); }
-    100%{ transform: rotateX(8deg) rotateY(360deg); }
+    0%{ transform: rotateX(18deg) rotateY(0deg); }
+    100%{ transform: rotateX(18deg) rotateY(360deg); }
   }
   body.boot .screen{
     background: #030303;
@@ -281,9 +297,10 @@
   .device-3d{
     position: relative;
     transform-style: preserve-3d;
+    --gb-d: 22px;
   }
   .console-face{
-    transform: rotateY(0deg);
+    transform: translateZ(var(--gb-d));
     backface-visibility: hidden;
     -webkit-backface-visibility: hidden;
   }
@@ -366,6 +383,48 @@
     font-size: 4.5px;
     color: #5a5a58;
     letter-spacing: 1px;
+  }
+  .console-edge{
+    position: absolute;
+    pointer-events: none;
+    background: #2a2a30;
+  }
+  .edge-left,
+  .edge-right{
+    top: 0;
+    bottom: 0;
+    width: var(--gb-d);
+    background: linear-gradient(180deg, #5a5a64 0%, #2e2e34 42%, #141418 100%);
+  }
+  .edge-left{
+    left: 0;
+    transform-origin: left center;
+    transform: rotateY(90deg);
+  }
+  .edge-right{
+    right: 0;
+    transform-origin: right center;
+    transform: rotateY(-90deg);
+  }
+  .edge-top,
+  .edge-bottom{
+    left: 0;
+    right: 0;
+    height: var(--gb-d);
+  }
+  .edge-top{
+    top: 0;
+    transform-origin: top center;
+    transform: rotateX(-90deg);
+    background: linear-gradient(90deg, #3a3a42, #6a6a74, #3a3a42);
+    border-radius: 16px 16px 0 0;
+  }
+  .edge-bottom{
+    bottom: 0;
+    transform-origin: bottom center;
+    transform: rotateX(90deg);
+    background: linear-gradient(90deg, #16161a, #2a2a30, #16161a);
+    border-radius: 0 0 34px 34px;
   }
   body.spinning .off-on-switch{ pointer-events: none; cursor: default; }
   @keyframes float{
@@ -1090,6 +1149,10 @@
           <div class="gb-serial">NO. TG-2019-08</div>
           <div class="gb-screws"><span></span><span></span></div>
         </div>
+        <div class="console-edge edge-left" aria-hidden="true"></div>
+        <div class="console-edge edge-right" aria-hidden="true"></div>
+        <div class="console-edge edge-top" aria-hidden="true"></div>
+        <div class="console-edge edge-bottom" aria-hidden="true"></div>
         </div>
       </div>
     </section>
