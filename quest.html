@@ -1,0 +1,448 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Side Quest — Cross Main Street</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link rel="icon" type="image/svg+xml" href="/favicon.svg">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&family=Inter:wght@400;600&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg: #0b0c0a;
+    --panel: #15170f;
+    --ink: #e8eed4;
+    --muted: #8b9270;
+    --green: #2f9e4a;
+    --road: #3a3a3c;
+  }
+  *{ box-sizing:border-box; }
+  html,body{ margin:0; padding:0; background:var(--bg); color:var(--ink); font-family:'Inter',sans-serif; min-height:100vh; }
+  a{ color:inherit; }
+  .wrap{
+    max-width: 720px;
+    margin: 0 auto;
+    padding: 18px 16px 28px;
+    display:flex;
+    flex-direction:column;
+    align-items:center;
+    gap: 14px;
+  }
+  .top{
+    width:100%;
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    gap:12px;
+  }
+  .back{
+    font-family:'Press Start 2P', monospace;
+    font-size:8px;
+    letter-spacing:1px;
+    text-transform:uppercase;
+    color: var(--muted);
+    text-decoration:none;
+  }
+  .back:hover{ color: var(--ink); }
+  h1{
+    font-family:'Press Start 2P', monospace;
+    font-size: 11px;
+    line-height:1.6;
+    margin:0;
+    text-align:center;
+  }
+  .hud{
+    width: min(100%, 520px);
+    display:flex;
+    justify-content:space-between;
+    font-family:'Press Start 2P', monospace;
+    font-size:8px;
+    color: var(--muted);
+  }
+  .hud b{ color: var(--green); font-weight:400; }
+  .stage{
+    position:relative;
+    width: min(100%, 520px);
+    background: #102010;
+    border: 4px solid #1e2416;
+    box-shadow: 0 18px 40px rgba(0,0,0,0.45);
+    image-rendering: pixelated;
+  }
+  canvas{
+    display:block;
+    width:100%;
+    height:auto;
+    image-rendering: pixelated;
+    image-rendering: crisp-edges;
+  }
+  .overlay{
+    position:absolute;
+    inset:0;
+    display:none;
+    align-items:center;
+    justify-content:center;
+    flex-direction:column;
+    gap:14px;
+    background: rgba(8,10,6,0.82);
+    text-align:center;
+    padding: 20px;
+  }
+  .overlay.show{ display:flex; }
+  .overlay h2{
+    font-family:'Press Start 2P', monospace;
+    font-size:12px;
+    line-height:1.7;
+    margin:0;
+  }
+  .overlay p{
+    margin:0;
+    font-size:14px;
+    color: var(--muted);
+    max-width: 280px;
+  }
+  .btn{
+    font-family:'Press Start 2P', monospace;
+    font-size:8px;
+    padding: 10px 14px;
+    border:0;
+    background: var(--green);
+    color:#061108;
+    cursor:pointer;
+  }
+  .help{
+    font-size:13px;
+    color: var(--muted);
+    text-align:center;
+    margin:0;
+  }
+  .pad{
+    display:grid;
+    grid-template-columns: 56px 56px 56px;
+    grid-template-rows: 56px 56px 56px;
+    gap:6px;
+    margin-top: 4px;
+  }
+  .pad button{
+    border:0;
+    background:#1c2116;
+    color: var(--ink);
+    font-family:'Press Start 2P', monospace;
+    font-size:12px;
+    cursor:pointer;
+    border-radius:6px;
+  }
+  .pad button:active{ background:#2a3320; }
+  .pad .up{ grid-column:2; grid-row:1; }
+  .pad .left{ grid-column:1; grid-row:2; }
+  .pad .right{ grid-column:3; grid-row:2; }
+  .pad .down{ grid-column:2; grid-row:3; }
+  @media (min-width: 720px){
+    .pad{ display:none; }
+  }
+</style>
+</head>
+<body>
+  <div class="wrap">
+    <div class="top">
+      <a class="back" href="/">← Portfolio</a>
+      <h1>Side Quest</h1>
+      <span></span>
+    </div>
+    <div class="hud">
+      <span>LIVES <b id="lives">3</b></span>
+      <span>CROSS MAIN STREET</span>
+    </div>
+    <div class="stage">
+      <canvas id="game" width="520" height="640"></canvas>
+      <div class="overlay" id="overlay">
+        <h2 id="overlayTitle">Ready?</h2>
+        <p id="overlayCopy">Get Travis across town without becoming a hood ornament.</p>
+        <button class="btn" id="overlayBtn">Start</button>
+      </div>
+    </div>
+    <p class="help">Arrow keys or WASD. Reach the shops on the far sidewalk.</p>
+    <div class="pad" aria-label="On-screen d-pad">
+      <button class="up" data-dir="up">▲</button>
+      <button class="left" data-dir="left">◀</button>
+      <button class="right" data-dir="right">▶</button>
+      <button class="down" data-dir="down">▼</button>
+    </div>
+  </div>
+<script>
+  const TILE = 40;
+  const COLS = 13;
+  const ROWS = 16;
+  const canvas = document.getElementById('game');
+  const ctx = canvas.getContext('2d');
+  const overlay = document.getElementById('overlay');
+  const overlayTitle = document.getElementById('overlayTitle');
+  const overlayCopy = document.getElementById('overlayCopy');
+  const overlayBtn = document.getElementById('overlayBtn');
+  const livesEl = document.getElementById('lives');
+
+  const sprite = new Image();
+  sprite.src = '/assets/images/travis-sprite.png';
+
+  const START = { c: 6, r: 14 };
+  const GOAL_ROW = 2;
+
+  const lanes = [
+    { row: 4, dir: 1, speed: 70, w: 52, gap: 160, color: '#c4453c' },
+    { row: 5, dir: -1, speed: 110, w: 44, gap: 150, color: '#d6b03a' },
+    { row: 6, dir: 1, speed: 90, w: 58, gap: 170, color: '#3d6fb3' },
+    { row: 8, dir: -1, speed: 100, w: 48, gap: 155, color: '#e8e4da' },
+    { row: 9, dir: 1, speed: 125, w: 40, gap: 140, color: '#6b3fa0' },
+    { row: 10, dir: -1, speed: 80, w: 62, gap: 180, color: '#2f8f4a' }
+  ];
+
+  let cars = [];
+  let player = { c: START.c, r: START.r };
+  let lives = 3;
+  let running = false;
+  let last = 0;
+  let moveLock = false;
+  let flash = 0;
+
+  function rowType(r){
+    if(r <= 1) return 'building';
+    if(r === 2 || r === 11 || r === 14) return 'walk';
+    if(r === 3 || r === 7 || r === 12 || r === 13 || r === 15) return 'grass';
+    return 'road';
+  }
+
+  function resetCars(){
+    cars = [];
+    lanes.forEach((lane, i) => {
+      const count = 3;
+      for(let n = 0; n < count; n++){
+        cars.push({
+          x: n * lane.gap + (i * 30),
+          lane,
+          w: lane.w
+        });
+      }
+    });
+  }
+
+  function resetPlayer(){
+    player = { c: START.c, r: START.r };
+    moveLock = false;
+  }
+
+  function showOverlay(title, copy, btn){
+    overlayTitle.textContent = title;
+    overlayCopy.textContent = copy;
+    overlayBtn.textContent = btn;
+    overlay.classList.add('show');
+    running = false;
+  }
+
+  function startGame(){
+    lives = 3;
+    livesEl.textContent = lives;
+    resetCars();
+    resetPlayer();
+    overlay.classList.remove('show');
+    running = true;
+    last = performance.now();
+    requestAnimationFrame(loop);
+  }
+
+  function render(){
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+    drawTown();
+    drawCars();
+    drawPlayer();
+  }
+
+  function hop(dc, dr){
+    if(!running || moveLock) return;
+    const nc = player.c + dc;
+    const nr = player.r + dr;
+    if(nc < 0 || nc >= COLS || nr < 0 || nr >= ROWS) return;
+    if(rowType(nr) === 'building') return;
+    player.c = nc;
+    player.r = nr;
+    moveLock = true;
+    setTimeout(() => { moveLock = false; }, 110);
+    if(player.r <= GOAL_ROW){
+      showOverlay('You made it!', 'Travis crossed Main Street. The shops are open and the coffee is on.', 'Play again');
+    }
+  }
+
+  function squash(){
+    flash = 180;
+    lives -= 1;
+    livesEl.textContent = Math.max(lives, 0);
+    if(lives <= 0){
+      showOverlay('Splat.', 'A sedan had other plans. Try the crossing again.', 'Retry');
+    }else{
+      resetPlayer();
+    }
+  }
+
+  function playerBox(){
+    const padX = 8;
+    const padY = 4;
+    return {
+      x: player.c * TILE + padX,
+      y: player.r * TILE + padY,
+      w: TILE - padX * 2,
+      h: TILE - padY * 2
+    };
+  }
+
+  function hit(a, b){
+    return a.x < b.x + b.w && a.x + a.w > b.x && a.y < b.y + b.h && a.y + a.h > b.y;
+  }
+
+  function drawTown(){
+    for(let r = 0; r < ROWS; r++){
+      for(let c = 0; c < COLS; c++){
+        const x = c * TILE;
+        const y = r * TILE;
+        const type = rowType(r);
+        if(type === 'building'){
+          ctx.fillStyle = r === 0 ? '#5a4638' : '#6d5544';
+          ctx.fillRect(x, y, TILE, TILE);
+        }else if(type === 'walk'){
+          ctx.fillStyle = '#cfc8b4';
+          ctx.fillRect(x, y, TILE, TILE);
+          ctx.fillStyle = '#b9b19c';
+          if((c + r) % 2 === 0) ctx.fillRect(x, y, TILE, TILE);
+        }else if(type === 'grass'){
+          ctx.fillStyle = (c + r) % 2 ? '#4f8a3d' : '#467e36';
+          ctx.fillRect(x, y, TILE, TILE);
+        }else{
+          ctx.fillStyle = '#3a3a3c';
+          ctx.fillRect(x, y, TILE, TILE);
+        }
+      }
+    }
+
+    // building details
+    const shops = [
+      { c: 1, label: 'CAFE', color: '#8b3a3a' },
+      { c: 5, label: 'HOME', color: '#3d5c8a' },
+      { c: 9, label: 'SEO', color: '#2f6b45' }
+    ];
+    shops.forEach(shop => {
+      ctx.fillStyle = shop.color;
+      ctx.fillRect(shop.c * TILE, 0, TILE * 3, TILE * 2);
+      ctx.fillStyle = '#f0e2b0';
+      for(let i = 0; i < 2; i++){
+        ctx.fillRect(shop.c * TILE + 10 + i * 22, 10, 12, 12);
+        ctx.fillRect(shop.c * TILE + 10 + i * 22, 28, 12, 12);
+      }
+      ctx.fillStyle = '#1a120c';
+      ctx.fillRect(shop.c * TILE + 22, 52, 16, 28);
+      ctx.fillStyle = '#f4efe2';
+      ctx.font = '8px "Press Start 2P"';
+      ctx.fillText(shop.label, shop.c * TILE + 8, 22);
+    });
+
+    // road lines
+    ctx.fillStyle = '#d6c56a';
+    [4,5,6,8,9,10].forEach(r => {
+      for(let c = 0; c < COLS; c++){
+        if(c % 2 === 0) ctx.fillRect(c * TILE + 8, r * TILE + TILE - 3, 18, 3);
+      }
+    });
+    // median
+    ctx.fillStyle = '#d7a53a';
+    ctx.fillRect(0, 7 * TILE + 16, canvas.width, 6);
+
+    // crosswalk
+    ctx.fillStyle = '#f2efe6';
+    [4,5,6,8,9,10].forEach(r => {
+      for(let i = 0; i < 5; i++){
+        ctx.fillRect(6 * TILE + 6, r * TILE + 4 + i * 7, 28, 4);
+      }
+    });
+
+    // trees
+    [[0,12],[12,12],[0,15],[12,15],[2,13],[10,13]].forEach(([c,r]) => {
+      ctx.fillStyle = '#2c5a28';
+      ctx.fillRect(c * TILE + 8, r * TILE + 6, 24, 20);
+      ctx.fillStyle = '#6b4a2a';
+      ctx.fillRect(c * TILE + 16, r * TILE + 24, 8, 12);
+    });
+  }
+
+  function drawCars(){
+    cars.forEach(car => {
+      const y = car.lane.row * TILE + 8;
+      ctx.fillStyle = '#111';
+      ctx.fillRect(car.x - 2, y + 18, car.w + 4, 6);
+      ctx.fillStyle = car.lane.color;
+      ctx.fillRect(car.x, y, car.w, 22);
+      ctx.fillStyle = '#9ad4e8';
+      const wx = car.lane.dir === 1 ? car.x + car.w - 16 : car.x + 4;
+      ctx.fillRect(wx, y + 4, 12, 8);
+    });
+  }
+
+  function drawPlayer(){
+    const x = player.c * TILE + 4;
+    const y = player.r * TILE - 6;
+    if(flash > 0 && Math.floor(flash / 40) % 2 === 0) return;
+    if(sprite.complete && sprite.naturalWidth){
+      ctx.imageSmoothingEnabled = false;
+      ctx.drawImage(sprite, x, y, 32, 46);
+    }else{
+      ctx.fillStyle = '#111';
+      ctx.fillRect(x + 8, y + 4, 16, 36);
+    }
+  }
+
+  function loop(now){
+    if(!running) return;
+    const dt = Math.min(0.04, (now - last) / 1000);
+    last = now;
+    if(flash > 0) flash -= dt * 1000;
+
+    cars.forEach(car => {
+      car.x += car.lane.dir * car.lane.speed * dt;
+      if(car.lane.dir === 1 && car.x > canvas.width + 20) car.x = -car.w - 10;
+      if(car.lane.dir === -1 && car.x < -car.w - 20) car.x = canvas.width + 10;
+    });
+
+    const box = playerBox();
+    for(const car of cars){
+      const carBox = { x: car.x, y: car.lane.row * TILE + 8, w: car.w, h: 22 };
+      if(hit(box, carBox)){
+        squash();
+        break;
+      }
+    }
+
+    render();
+    requestAnimationFrame(loop);
+  }
+
+  const dirs = {
+    ArrowUp: [0, -1], ArrowDown: [0, 1], ArrowLeft: [-1, 0], ArrowRight: [1, 0],
+    w: [0, -1], a: [-1, 0], s: [0, 1], d: [1, 0]
+  };
+  document.addEventListener('keydown', (e) => {
+    const key = e.key.length === 1 ? e.key.toLowerCase() : e.key;
+    if(dirs[key]){
+      e.preventDefault();
+      hop(dirs[key][0], dirs[key][1]);
+    }
+  });
+  document.querySelectorAll('.pad button').forEach(btn => {
+    btn.addEventListener('click', () => {
+      const map = { up: [0,-1], down: [0,1], left: [-1,0], right: [1,0] };
+      hop(...map[btn.dataset.dir]);
+    });
+  });
+  overlayBtn.addEventListener('click', startGame);
+  resetCars();
+  resetPlayer();
+  sprite.onload = render;
+  render();
+  showOverlay('Main Street', 'Guide Travis across town. Cars do not stop. Shops wait on the other side.', 'Start');
+</script>
+</body>
+</html>
