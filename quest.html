@@ -57,7 +57,7 @@
 
   .device-stage{ display:flex; justify-content:center; width:100%; }
   .console{
-    width: min(92vw, 400px);
+    width: min(94vw, 440px);
     background: linear-gradient(160deg, #3a3a40 0%, #1c1c20 32%, #121214 68%, #070708 100%);
     border-radius: 16px 16px 34px 34px;
     padding: 16px 16px 22px;
@@ -180,29 +180,33 @@
     align-items:center;
     padding: 18px 8px 0;
     position:relative;
+    gap: 22px;
   }
-  .dpad{ position:relative; width:96px; height:96px; }
+  .dpad{ position:relative; width:124px; height:124px; flex-shrink:0; }
   .dpad-btn{
     position:absolute;
     background: linear-gradient(160deg, #4a4a4a, #232323);
     border:none;
     box-shadow: 0 2px 0 #111;
     cursor:pointer;
-    min-width: 40px;
-    min-height: 40px;
+    min-width: 0;
+    min-height: 0;
+    padding: 0;
+    touch-action: manipulation;
   }
-  .dpad .up,.dpad .down{ width:32px; height:36px; left:32px; }
-  .dpad .left,.dpad .right{ width:36px; height:32px; top:32px; }
+  .dpad .up,.dpad .down{ width:40px; height:46px; left:42px; }
+  .dpad .left,.dpad .right{ width:46px; height:40px; top:42px; }
   .dpad .up{ top:0; border-radius:4px 4px 0 0; }
   .dpad .down{ bottom:0; border-radius:0 0 4px 4px; }
   .dpad .left{ left:0; border-radius:4px 0 0 4px; }
   .dpad .right{ right:0; border-radius:0 4px 4px 0; }
-  .dpad .center{ position:absolute; width:34px; height:34px; top:31px; left:31px; background:#2b2b2b; pointer-events:none; }
+  .dpad .center{ position:absolute; width:40px; height:40px; top:42px; left:42px; background:#2b2b2b; pointer-events:none; }
   .ab-buttons{
     display:flex;
     align-items:flex-end;
-    gap:12px;
+    gap:18px;
     transform: rotate(-12deg);
+    flex-shrink:0;
   }
   .round-btn{
     width:48px; height:48px;
@@ -237,6 +241,13 @@
     transform: rotate(-18deg);
   }
   .speaker span{ width:2px; height:18px; background:#070708; box-shadow: 0 0 0 1px #2a2a2e; }
+  @media (max-width: 420px){
+    .speaker{ display:none; }
+    .dpad{ width:128px; height:128px; }
+    .dpad .up,.dpad .down{ width:40px; height:48px; left:44px; }
+    .dpad .left,.dpad .right{ width:48px; height:40px; top:44px; }
+    .dpad .center{ width:40px; height:40px; top:44px; left:44px; }
+  }
 </style>
 </head>
 <body>
