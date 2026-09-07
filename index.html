@@ -120,6 +120,13 @@
   }
   body.boot .screen::before,
   body.boot .screen-inner{ opacity: 0; }
+  body.boot.powering .screen{
+    background: var(--screen);
+    box-shadow: 0 0 10px rgba(50,60,30,0.5) inset;
+  }
+  body.boot.powering .screen::before{ opacity: 1; }
+  body.boot.powering .screen-inner{ opacity: 0; }
+  body.boot.powering .boot-hint{ display: none; }
   body.boot .dpad-btn,
   body.boot .round-btn,
   body.boot .pill-btn{ pointer-events: none; }
@@ -148,10 +155,6 @@
   body.screen-off .boot-hint{ display:block; }
   body.screen-off .off-on-switch{
     box-shadow: 0 0 0 3px rgba(47,158,74,0.35), inset 0 1px 3px #000;
-  }
-  @keyframes screen-wake{
-    from{ filter: brightness(0); }
-    to{ filter: brightness(1); }
   }
   body.on .site-ui{
     animation: chrome-in 0.7s ease both;
@@ -553,9 +556,43 @@
   .screen-frame{
     background: #111;
     border-radius: 4px;
-    padding: 10px;
+    padding: 10px 10px 10px 6px;
+    display: flex;
+    align-items: stretch;
+    gap: 5px;
+  }
+  .power-led{
+    width: 7px;
+    height: 7px;
+    border-radius: 50%;
+    flex-shrink: 0;
+    margin-top: 7px;
+    background: #2a0c0c;
+    box-shadow: inset 0 1px 2px #000;
+    pointer-events: none;
+    transition: background 0.2s ease, box-shadow 0.2s ease;
+  }
+  body.on .power-led,
+  body.powering .power-led{
+    background: radial-gradient(circle at 35% 30%, #ff7a7a, #e01414 52%, #8a0008);
+    box-shadow:
+      0 0 5px 1px rgba(255, 40, 40, 0.95),
+      0 0 12px 3px rgba(220, 16, 16, 0.55);
+    animation: led-glow 2.4s ease-in-out infinite;
+  }
+  body.screen-off .power-led,
+  body.boot:not(.powering) .power-led{
+    background: #2a0c0c;
+    box-shadow: inset 0 1px 2px #000;
+    animation: none;
+  }
+  @keyframes led-glow{
+    0%,100%{ box-shadow: 0 0 5px 1px rgba(255,40,40,0.9), 0 0 12px 3px rgba(220,16,16,0.5); }
+    50%{ box-shadow: 0 0 8px 2px rgba(255,70,70,1), 0 0 16px 4px rgba(255,30,30,0.7); }
   }
   .screen{
+    flex: 1;
+    min-width: 0;
     position:relative;
     background: var(--screen);
     aspect-ratio: 10/9;
@@ -570,6 +607,56 @@
     position:absolute; inset:0;
     background: repeating-linear-gradient(to bottom, rgba(51,61,38,0.08) 0px, rgba(51,61,38,0.08) 1px, transparent 1px, transparent 3px);
     pointer-events:none;
+    z-index: 3;
+  }
+  .gb-boot{
+    display: none;
+    position: absolute;
+    inset: 0;
+    z-index: 2;
+    align-items: center;
+    justify-content: center;
+    pointer-events: none;
+  }
+  body.boot.powering .gb-boot{ display: flex; }
+  .gb-boot-shade{
+    position: absolute;
+    inset: 0;
+    background: #030303;
+    animation: gb-lightup 0.5s ease forwards;
+  }
+  .gb-boot-logo{
+    position: relative;
+    z-index: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 10px;
+    animation: gb-logo-drop 0.9s 0.28s cubic-bezier(0.2, 0.85, 0.3, 1.15) both;
+  }
+  .gb-boot-logo span{
+    font-family: 'Press Start 2P', monospace;
+    color: var(--screen-darkest);
+    line-height: 1;
+    letter-spacing: 2px;
+  }
+  .gb-boot-logo .gb-boot-first{
+    font-size: 12px;
+    letter-spacing: 4px;
+  }
+  .gb-boot-logo .gb-boot-last{
+    font-size: 10px;
+    letter-spacing: 1.5px;
+  }
+  @keyframes gb-lightup{
+    from{ opacity: 1; }
+    to{ opacity: 0; }
+  }
+  @keyframes gb-logo-drop{
+    0%{ transform: translateY(-130%); opacity: 0; }
+    72%{ transform: translateY(5px); opacity: 1; }
+    86%{ transform: translateY(-3px); }
+    100%{ transform: translateY(0); opacity: 1; }
   }
   .screen-inner{
     position:absolute; inset:0;
@@ -893,7 +980,13 @@
     body.boot.spinning .device-wrap,
     body.boot.spinning .device-3d,
     body.on .site-ui,
-    .boot-hint{ animation: none !important; }
+    .boot-hint,
+    .gb-boot-shade,
+    .gb-boot-logo,
+    body.on .power-led,
+    body.powering .power-led{ animation: none !important; }
+    .gb-boot-shade{ opacity: 0; }
+    .gb-boot-logo{ transform: none; opacity: 1; }
   }
 </style>
 </head>
@@ -945,7 +1038,15 @@
           <div class="bezel">
             <div class="bezel-label">GOLDSTON SYSTEM</div>
             <div class="screen-frame">
+              <span class="power-led" aria-hidden="true"></span>
               <div class="screen">
+                <div class="gb-boot" id="gbBoot" aria-hidden="true">
+                  <div class="gb-boot-shade"></div>
+                  <div class="gb-boot-logo">
+                    <span class="gb-boot-first">TRAVIS</span>
+                    <span class="gb-boot-last">GOLDSTON</span>
+                  </div>
+                </div>
                 <div class="screen-inner" id="screenInner" role="region" aria-label="Pocketfolio operating system">
                   <h2 class="sr-only">Travis Goldston — VP of Customer Experience, AI + SEO Enthusiast</h2>
 
@@ -1290,11 +1391,13 @@
     const fromBoot = document.body.classList.contains('boot');
     try{ sessionStorage.setItem('pocketfolioOn', '1'); }catch(e){}
     if(fromBoot){
-      document.body.classList.add('powering', 'await-power');
+      document.body.classList.remove('await-power');
+      document.body.classList.add('powering');
+      const reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
       window.setTimeout(() => {
         document.body.classList.remove('boot', 'powering', 'spinning', 'await-power');
         document.body.classList.add('on');
-      }, 420);
+      }, reduced ? 280 : 2100);
     }else{
       document.body.classList.add('on');
     }
