@@ -72,6 +72,7 @@
     padding: 32px 20px;
   }
   body.boot .device-stage{ perspective: 900px; }
+  body.on .device-stage{ perspective: none; }
   body.boot.spinning .device-wrap{
     animation: none;
     transform: none;
@@ -91,17 +92,23 @@
   }
   body.boot.spinning .device-3d{
     animation: console-spin 3.6s linear infinite;
+    transform-style: preserve-3d;
   }
   body.boot.await-power .device-wrap{
     transform: rotateX(6deg) rotateY(-16deg);
     animation: none;
     filter: drop-shadow(0 28px 40px rgba(0,0,0,0.75));
+    transform-style: flat;
   }
   body.boot.await-power .device-3d{
     transform: none;
+    transform-style: flat;
   }
   body.boot.await-power .console-face{
     cursor: pointer;
+    transform: none;
+    backface-visibility: visible;
+    -webkit-backface-visibility: visible;
   }
   @keyframes console-spin{
     0%{ transform: rotateX(18deg) rotateY(0deg); }
@@ -148,6 +155,25 @@
   }
   body.on .site-ui{
     animation: chrome-in 0.7s ease both;
+  }
+  body.on .device-wrap,
+  body.on .device-3d,
+  body.on .console-face,
+  body.on .screen{
+    transform-style: flat;
+  }
+  body.on .console-face{
+    transform: none;
+    backface-visibility: visible;
+    -webkit-backface-visibility: visible;
+  }
+  body.on .screen-inner,
+  body.on .screen::before{
+    opacity: 1;
+    visibility: visible;
+    transform: none;
+    backface-visibility: visible;
+    -webkit-backface-visibility: visible;
   }
   @keyframes chrome-in{
     from{ opacity: 0; transform: translateY(8px); }
@@ -288,32 +314,34 @@
     display:flex;
     justify-content:center;
     align-items:center;
-    perspective: 1200px;
   }
   .device-wrap{
     transform: rotate(-2.5deg);
-    transform-style: preserve-3d;
+    transform-style: flat;
     filter: drop-shadow(24px 34px 26px rgba(30,26,20,0.28));
     animation: float 6s ease-in-out infinite;
   }
   .device-3d{
     position: relative;
-    transform-style: preserve-3d;
+    transform-style: flat;
     --gb-d: 22px;
   }
   .console-face{
     transform: none;
-    backface-visibility: hidden;
-    -webkit-backface-visibility: hidden;
+    backface-visibility: visible;
+    -webkit-backface-visibility: visible;
   }
   body.boot.spinning .console-face{
     transform: translateZ(var(--gb-d));
+    backface-visibility: hidden;
+    -webkit-backface-visibility: hidden;
   }
   .console-back{
     position: absolute;
     inset: 0;
     pointer-events: none;
-    transform: rotateY(180deg);
+    transform: none;
+    visibility: hidden;
     backface-visibility: hidden;
     -webkit-backface-visibility: hidden;
     border-radius: 16px 16px 34px 34px;
@@ -399,8 +427,8 @@
   body.boot.spinning .console-back{
     visibility: visible;
   }
-  .console-back{
-    visibility: hidden;
+  body.boot.spinning .console-back{
+    transform: rotateY(180deg);
   }
   .edge-left,
   .edge-right{
@@ -412,12 +440,10 @@
   .edge-left{
     left: 0;
     transform-origin: left center;
-    transform: rotateY(90deg);
   }
   .edge-right{
     right: 0;
     transform-origin: right center;
-    transform: rotateY(-90deg);
   }
   .edge-top,
   .edge-bottom{
@@ -428,16 +454,26 @@
   .edge-top{
     top: 0;
     transform-origin: top center;
-    transform: rotateX(-90deg);
     background: linear-gradient(90deg, #3a3a42, #6a6a74, #3a3a42);
     border-radius: 16px 16px 0 0;
   }
   .edge-bottom{
     bottom: 0;
     transform-origin: bottom center;
-    transform: rotateX(90deg);
     background: linear-gradient(90deg, #16161a, #2a2a30, #16161a);
     border-radius: 0 0 34px 34px;
+  }
+  body.boot.spinning .edge-left{
+    transform: rotateY(90deg);
+  }
+  body.boot.spinning .edge-right{
+    transform: rotateY(-90deg);
+  }
+  body.boot.spinning .edge-top{
+    transform: rotateX(-90deg);
+  }
+  body.boot.spinning .edge-bottom{
+    transform: rotateX(90deg);
   }
   body.spinning .off-on-switch{ pointer-events: none; cursor: default; }
   @keyframes float{
@@ -541,6 +577,7 @@
     display:flex;
     flex-direction:column;
     overflow-y:auto;
+    z-index: 1;
   }
   .screen-inner::-webkit-scrollbar{ width:0; }
 
