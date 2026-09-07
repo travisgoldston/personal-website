@@ -537,7 +537,7 @@
   }
   .pill-wrap{ display:flex; flex-direction:column; align-items:center; gap:4px; }
   .pill-btn{
-    width:32px; height:9px;
+    width:40px; height:12px;
     background: linear-gradient(160deg,#5a5a5a,#333);
     border-radius:6px;
     transform: rotate(-18deg);
@@ -1171,10 +1171,16 @@
   }
 
   function bindPress(el, fn){
-    el.addEventListener('pointerdown', (e) => {
+    let last = 0;
+    const run = (e) => {
       e.preventDefault();
+      const now = Date.now();
+      if(now - last < 280) return;
+      last = now;
       fn();
-    });
+    };
+    el.addEventListener('pointerdown', run);
+    el.addEventListener('click', run);
   }
 
   document.querySelectorAll('.menu-item').forEach((item) => {
