@@ -2,13 +2,23 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<title>Travis Goldston — Pocketfolio</title>
+<title>Travis Goldston — VP of Customer Experience, AI + SEO Enthusiast</title>
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<meta name="description" content="An interactive handheld portfolio for Travis Goldston — CX leadership, growth, and local SEO.">
+<meta name="description" content="Travis Goldston — VP of Customer Experience, AI + SEO Enthusiast.">
+<link rel="canonical" href="https://travisgoldston.com/">
 <link rel="icon" type="image/svg+xml" href="/favicon.svg">
-<meta property="og:title" content="Travis Goldston — Pocketfolio">
-<meta property="og:description" content="A CX leader. An SEO builder. A lifelong Texan at heart. Welcome to my little world.">
-<meta property="og:image" content="/assets/images/travis-sprite.png">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://travisgoldston.com/">
+<meta property="og:title" content="Travis Goldston — VP of Customer Experience, AI + SEO Enthusiast">
+<meta property="og:description" content="VP of Customer Experience, AI + SEO Enthusiast.">
+<meta property="og:image" content="https://travisgoldston.com/assets/images/travis-sprite.png">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Travis Goldston — VP of Customer Experience, AI + SEO Enthusiast">
+<meta name="twitter:description" content="VP of Customer Experience, AI + SEO Enthusiast.">
+<meta name="twitter:image" content="https://travisgoldston.com/assets/images/travis-sprite.png">
+<script type="application/ld+json">
+{"@context":"https://schema.org","@type":"Person","name":"Travis Goldston","url":"https://travisgoldston.com/","jobTitle":"Vice President of Customer Experience","worksFor":{"@type":"Organization","name":"Romex Pest Control"},"alumniOf":{"@type":"CollegeOrUniversity","name":"Texas Tech University"},"address":{"@type":"PostalAddress","addressLocality":"Eagle Mountain","addressRegion":"UT"},"sameAs":["https://www.linkedin.com/in/travisgoldston","https://github.com/travisgoldston"]}
+</script>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,500;0,700;1,500;1,600&family=Inter:wght@400;500;600&family=Press+Start+2P&display=swap" rel="stylesheet">
 <style>
@@ -19,7 +29,7 @@
     --line: #d9d3c4;
 
     --shell: #161618;
-    --shell-hi: #2e2e32;
+    --shell-hi: #4a4a52;
     --shell-lo: #0a0a0c;
     --shell-shadow: #000000;
 
@@ -63,8 +73,12 @@
   }
   body.boot .device-stage{ perspective: 1400px; }
   body.boot.spinning .device-wrap{
-    animation: console-spin 2.4s linear infinite;
+    animation: none;
+    transform: none;
     filter: drop-shadow(0 28px 40px rgba(0,0,0,0.75));
+  }
+  body.boot.spinning .device-3d{
+    animation: console-spin 3.4s linear infinite;
   }
   body.boot.await-power .device-wrap{
     transform: rotateX(6deg) rotateY(-16deg);
@@ -149,7 +163,7 @@
   }
   .logo-mark span{
     width:5px; height:5px;
-    background: var(--maroon);
+    background: var(--green);
     display:block;
   }
   .logo-mark span:first-child{ margin-top:6px; }
@@ -259,25 +273,114 @@
     perspective: 1200px;
   }
   .device-wrap{
-    transform: rotate(-7deg);
+    transform: rotate(-2.5deg);
     transform-style: preserve-3d;
     filter: drop-shadow(24px 34px 26px rgba(30,26,20,0.28));
     animation: float 6s ease-in-out infinite;
   }
+  .device-3d{
+    position: relative;
+    transform-style: preserve-3d;
+  }
+  .console-face{
+    transform: rotateY(0deg);
+    backface-visibility: hidden;
+    -webkit-backface-visibility: hidden;
+  }
+  .console-back{
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+    transform: rotateY(180deg);
+    backface-visibility: hidden;
+    -webkit-backface-visibility: hidden;
+    border-radius: 16px 16px 34px 34px;
+    background: linear-gradient(165deg, #4a4a52 0%, #26262c 42%, #141418 100%);
+    box-shadow:
+      0 1px 0 rgba(255,255,255,0.08) inset,
+      0 -10px 16px rgba(0,0,0,0.5) inset;
+    padding: 22px 18px 20px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+  .gb-screws{
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+  }
+  .gb-screws span{
+    width: 10px; height: 10px;
+    border-radius: 50%;
+    background: radial-gradient(circle at 35% 30%, #5a5a60, #1a1a1c 70%);
+    box-shadow: 0 1px 0 #000 inset;
+  }
+  .gb-battery{
+    margin: 28px 8px 0;
+    width: 78%;
+    flex: 1;
+    border-radius: 6px;
+    background: linear-gradient(180deg, #1a1a1e, #0c0c0e);
+    border: 2px solid #2a2a2e;
+    box-shadow: 0 2px 0 #000 inset;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+  }
+  .gb-battery::before{
+    content: "";
+    position: absolute;
+    top: 8px; left: 50%;
+    transform: translateX(-50%);
+    width: 36px; height: 6px;
+    border-radius: 2px;
+    background: #2e2e32;
+  }
+  .gb-battery-label{
+    font-family: 'Press Start 2P', monospace;
+    font-size: 6px;
+    letter-spacing: 1px;
+    color: #6a6a70;
+  }
+  .gb-stamp{
+    margin-top: 16px;
+    text-align: center;
+    font-family: 'Playfair Display', serif;
+    font-style: italic;
+    font-size: 13px;
+    color: #c8c6c0;
+  }
+  .gb-stamp small{
+    display: block;
+    margin-top: 4px;
+    font-family: 'Press Start 2P', monospace;
+    font-style: normal;
+    font-size: 4.5px;
+    letter-spacing: 1px;
+    color: #7a7872;
+  }
+  .gb-serial{
+    margin-top: 10px;
+    font-family: 'Press Start 2P', monospace;
+    font-size: 4.5px;
+    color: #5a5a58;
+    letter-spacing: 1px;
+  }
   body.spinning .off-on-switch{ pointer-events: none; cursor: default; }
   @keyframes float{
-    0%,100%{ transform: rotate(-7deg) translateY(0px); }
-    50%{ transform: rotate(-7deg) translateY(-8px); }
+    0%,100%{ transform: rotate(-2.5deg) translateY(0px); }
+    50%{ transform: rotate(-2.5deg) translateY(-8px); }
   }
 
   .console{
     width: 320px;
-    background: linear-gradient(160deg, #3a3a40 0%, #1c1c20 32%, #121214 68%, #070708 100%);
+    background: linear-gradient(160deg, #5c5c66 0%, #323238 34%, #1e1e24 70%, #121218 100%);
     border-radius: 16px 16px 34px 34px;
-    padding: 16px 16px 26px;
+    padding: 16px 16px 28px;
     position: relative;
     box-shadow:
-      0 1px 0 rgba(255,255,255,0.16) inset,
+      0 1px 0 rgba(255,255,255,0.24) inset,
       0 -12px 18px rgba(0,0,0,0.55) inset,
       0 22px 32px rgba(0,0,0,0.38);
   }
@@ -320,7 +423,7 @@
   .bezel{
     background: linear-gradient(160deg, var(--bezel), var(--bezel-dark));
     border-radius: 8px 8px 30px 8px;
-    padding: 14px 14px 20px;
+    padding: 14px 14px 14px;
     box-shadow: 0 6px 14px rgba(0,0,0,0.35) inset;
   }
 
@@ -381,21 +484,27 @@
     margin-bottom: 7px;
   }
   .avatar{
-    width: 24px; height: 36px;
+    width: 26px; height: 38px;
     display:flex;
     align-items:center;
     justify-content:center;
     flex-shrink:0;
     overflow:hidden;
+    padding: 1px;
+    background: #4a5638;
+    box-shadow: inset 0 0 0 1px #2c341c;
   }
   .avatar svg, .portrait svg{ display:block; width:100%; height:100%; }
   .portrait{
-    width: 56px; height: 94px;
+    width: 62px; height: 100px;
     margin: 0 auto 8px;
     display:flex;
     align-items:center;
     justify-content:center;
     overflow:hidden;
+    padding: 3px 2px 2px;
+    background: #4a5638;
+    box-shadow: inset 0 0 0 1px #2c341c;
   }
   .avatar img, .portrait img{
     display:block;
@@ -404,6 +513,10 @@
     object-fit:contain;
     image-rendering: pixelated;
     image-rendering: crisp-edges;
+    filter:
+      drop-shadow(0 1px 0 rgba(20,24,12,0.55))
+      drop-shadow(1px 0 0 rgba(20,24,12,0.35))
+      drop-shadow(-1px 0 0 rgba(20,24,12,0.35));
   }
   .card-name{ font-size: 8px; line-height:1.5; }
   .card-role{ font-size: 5.5px; color: var(--screen-dark); letter-spacing:0.5px; }
@@ -458,7 +571,7 @@
     display:flex;
     align-items:baseline;
     justify-content:space-between;
-    padding: 14px 8px 0;
+    padding: 8px 8px 0;
   }
   .device-wordmark{
     font-family:'Playfair Display', serif;
@@ -478,9 +591,10 @@
   .controls-row{
     display:flex;
     justify-content:space-between;
-    align-items:center;
-    padding: 20px 10px 0;
+    align-items:flex-start;
+    padding: 10px 28px 8px 8px;
     position:relative;
+    z-index: 1;
   }
 
   .dpad{ position:relative; width:74px; height:74px; }
@@ -489,6 +603,8 @@
     background: linear-gradient(160deg, #4a4a4a, #232323);
     border:none;
     box-shadow: 0 2px 0 #111;
+    cursor:pointer;
+    touch-action: manipulation;
   }
   .dpad .up,.dpad .down{ width:24px; height:26px; left:25px; }
   .dpad .left,.dpad .right{ width:26px; height:24px; top:25px; }
@@ -502,7 +618,11 @@
     display:flex;
     align-items:flex-end;
     gap:10px;
-    transform: rotate(-18deg);
+    transform: rotate(-14deg);
+    position: relative;
+    z-index: 2;
+    flex-shrink: 0;
+    margin-top: 6px;
   }
   .round-btn{
     width:32px; height:32px;
@@ -521,15 +641,18 @@
   .pill-row{
     display:flex;
     justify-content:center;
-    gap:16px;
-    padding: 18px 0 2px;
+    gap:28px;
+    padding: 4px 12px 4px;
+    position: relative;
+    z-index: 2;
   }
-  .pill-wrap{ display:flex; flex-direction:column; align-items:center; gap:4px; }
+  .pill-wrap{ display:flex; flex-direction:column; align-items:center; gap:14px; }
   .pill-btn{
-    width:32px; height:9px;
+    width:40px; height:12px;
     background: linear-gradient(160deg,#5a5a5a,#333);
     border-radius:6px;
     transform: rotate(-18deg);
+    transform-origin: 50% 100%;
     border:none;
     cursor:pointer;
     box-shadow: 0 2px 0 #1c1c1c;
@@ -539,12 +662,15 @@
 
   .speaker{
     position:absolute;
-    right: 14px; bottom: 6px;
+    right: 18px;
+    bottom: 12px;
     display:flex;
     gap:3px;
     transform: rotate(-18deg);
+    pointer-events: none;
+    z-index: 0;
   }
-  .speaker span{ width:2px; height:18px; background: #070708; box-shadow: 0 0 0 1px #2a2a2e; }
+  .speaker span{ width:2px; height:14px; background: #070708; box-shadow: 0 0 0 1px #2a2a2e; }
 
   /* ---------- right column ---------- */
   .how-to-play h3{
@@ -578,7 +704,7 @@
     font-size: 10px;
     letter-spacing:1px;
     text-transform:uppercase;
-    color: var(--line);
+    color: #5a554c;
     margin: 20px 0 30px;
   }
 
@@ -598,12 +724,68 @@
   .mini-dpad{ display:inline-grid; grid-template-columns:repeat(3,6px); grid-template-rows:repeat(3,6px); gap:1px; }
   .mini-dpad span{ background:transparent; }
   .mini-dpad span.on{ background: var(--maroon); }
+
+  .lvl-kicker{ font-size:5.5px; color: var(--screen-dark); margin-bottom:6px; letter-spacing:0.5px; }
+  .lvl-title{ font-size:7px; line-height:1.55; margin-bottom:4px; }
+  .lvl-meta{ font-size:5.5px; color: var(--screen-dark); margin-bottom:8px; }
+  .tiny-list{ margin:0 0 8px; padding:0; list-style:none; }
+  .tiny-list li{ font-family:'Inter',sans-serif; font-size:9px; line-height:1.4; margin-bottom:3px; color: var(--screen-darkest); }
+  .tiny-list li::before{ content:"▸ "; font-family:'Press Start 2P', monospace; font-size:5px; }
+  .badge-row{ display:flex; flex-wrap:wrap; gap:4px; margin: 6px 0 8px; }
+  .badge{
+    font-size:5px;
+    border: 1px solid var(--screen-darkest);
+    padding: 3px 4px;
+    color: var(--screen-darkest);
+  }
+  .placeholder{
+    font-family:'Inter',sans-serif;
+    font-size:9px;
+    line-height:1.4;
+    color: var(--screen-dark);
+    border: 1px dashed rgba(51,61,38,0.45);
+    padding: 6px;
+    margin: 6px 0;
+  }
+  .stat-fact{ font-size:6px; margin-bottom:7px; line-height:1.65; }
+  .inv-cat{ font-size:5.5px; letter-spacing:0.6px; color: var(--screen-dark); margin: 8px 0 4px; }
+  .screen a.gb-link{
+    color: var(--screen-darkest);
+    text-decoration: underline;
+    text-underline-offset: 2px;
+    pointer-events: auto;
+    position: relative;
+    z-index: 2;
+  }
+  .sr-only{
+    position:absolute; width:1px; height:1px; padding:0; margin:-1px;
+    overflow:hidden; clip:rect(0,0,0,0); white-space:nowrap; border:0;
+  }
+  @media (max-width: 640px){
+    .console{ width: min(94vw, 360px); }
+    .controls-row{ gap: 14px; padding: 10px 44px 10px 6px; }
+    .dpad{ width: 118px; height: 118px; }
+    .dpad .up,.dpad .down{ width: 36px; height: 44px; left: 41px; }
+    .dpad .left,.dpad .right{ width: 44px; height: 36px; top: 41px; }
+    .dpad .center{ width: 36px; height: 36px; top: 41px; left: 41px; }
+    .round-btn{ width: 42px; height: 42px; }
+    .pill-row{ padding: 6px 12px 6px; gap: 28px; }
+    .speaker{ right: 14px; bottom: 10px; }
+    .device-wrap{ transform: rotate(-2deg); }
+  }
+  @media (prefers-reduced-motion: reduce){
+    .device-wrap,
+    body.boot.spinning .device-wrap,
+    body.boot.spinning .device-3d,
+    body.on .site-ui,
+    .boot-hint{ animation: none !important; }
+  }
 </style>
 </head>
 <body class="boot spinning">
 
   <header class="topnav site-ui">
-    <div class="logo"><span class="logo-mark"><span></span><span></span></span>travisgoldston<span style="color:var(--maroon)">.</span></div>
+    <div class="logo"><span class="logo-mark"><span></span><span></span></span>travisgoldston<span style="color:var(--green)">.</span></div>
     <div>An Interactive Portfolio</div>
     <div class="status">Open to New Projects</div>
   </header>
@@ -615,7 +797,7 @@
     <section class="hero-left site-ui">
       <span class="tag-pill">01 — The Pocket Edition</span>
       <h1 class="headline">Small screen.<em>Big experience.</em></h1>
-      <p class="sub-copy">A CX leader. An SEO builder. A lifelong Texan at heart. Welcome to my little world.</p>
+      <p class="sub-copy">I’m a VP of CX. An SEO and AI builder. Born and Raised Texan. Welcome to my world.</p>
       <hr class="hr-line">
       <div class="signature-row">
         <span class="plus">+</span>
@@ -636,7 +818,8 @@
     <!-- CENTER: DEVICE -->
     <section class="device-stage">
       <div class="device-wrap">
-        <div class="console">
+        <div class="device-3d">
+        <div class="console console-face">
 
           <div class="top-controls">
             <button type="button" class="off-on-switch" id="powerSwitch" aria-label="Turn screen on or off"></button>
@@ -645,84 +828,228 @@
           </div>
 
           <div class="bezel">
-            <div class="bezel-label">NOT MATCHED WITH PERSONALITY</div>
+            <div class="bezel-label">GOLDSTON SYSTEM</div>
             <div class="screen-frame">
               <div class="screen">
-                <div class="screen-inner" id="screenInner">
+                <div class="screen-inner" id="screenInner" role="region" aria-label="Pocketfolio operating system">
+                  <h2 class="sr-only">Travis Goldston — VP of Customer Experience, AI + SEO Enthusiast</h2>
 
-                  <div class="status-row">
+                  <div class="status-row" id="playerTag">
                     <span>PLAYER 01</span>
                     <span class="hearts">♥ ♥ ♥</span>
                   </div>
 
-                  <!-- HOME -->
                   <div class="page active" data-page="home">
                     <div class="card-row">
-                      <div class="avatar"><img src="/assets/images/travis-sprite.png" alt="Pixel sprite of Travis" style="width:100%;height:100%;object-fit:contain;border-radius:2px;"></div>
+                      <div class="avatar"><img src="/assets/images/travis-sprite.png" alt="Pixel sprite of Travis Goldston" width="24" height="36"></div>
                       <div>
                         <div class="card-name">TRAVIS<br>GOLDSTON</div>
-                        <div class="card-role">CX LEADER + SEO</div>
+                        <div class="card-role">START MENU</div>
                       </div>
                     </div>
-                    <div class="menu-item selected" data-target="about"><span class="left"><span class="arrow">▶</span>ABOUT ME</span><span class="num">01</span></div>
-                    <div class="menu-item" data-target="projects"><span class="left"><span class="arrow">▶</span>SELECTED WORK</span><span class="num">02</span></div>
-                    <div class="menu-item" data-target="skills"><span class="left"><span class="arrow">▶</span>MY TOOLKIT</span><span class="num">03</span></div>
-                    <div class="menu-item" data-target="contact"><span class="left"><span class="arrow">▶</span>SAY HELLO</span><span class="num">04</span></div>
-                    <div class="footer-hint">● A LITTLE CURIOUS? PRESS A.</div>
+                    <div class="menu-item selected" data-target="about"><span class="left"><span class="arrow">▶</span>ABOUT</span><span class="num">01</span></div>
+                    <div class="menu-item" data-target="career"><span class="left"><span class="arrow">▶</span>CAREER</span><span class="num">02</span></div>
+                    <div class="menu-item" data-target="stats"><span class="left"><span class="arrow">▶</span>STATS</span><span class="num">03</span></div>
+                    <div class="menu-item" data-target="projects"><span class="left"><span class="arrow">▶</span>PROJECTS</span><span class="num">04</span></div>
+                    <div class="menu-item" data-target="toolkit"><span class="left"><span class="arrow">▶</span>TOOLKIT</span><span class="num">05</span></div>
+                    <div class="menu-item" data-target="contact"><span class="left"><span class="arrow">▶</span>CONTACT</span><span class="num">06</span></div>
+                    <div class="menu-item" data-target="save"><span class="left"><span class="arrow">▶</span>SAVE FILE</span><span class="num">07</span></div>
+                    <div class="footer-hint">A SELECT · B BACK · START HOME</div>
                   </div>
 
-                  <!-- ABOUT -->
-                  <div class="page" data-page="about">
-                    <div class="portrait"><img src="/assets/images/travis-sprite.png" alt="Pixel sprite of Travis" style="width:100%;height:100%;object-fit:contain;border-radius:2px;"></div>
-                    <div class="sub-heading" style="text-align:center;">ABOUT ME</div>
-                    <div class="proj-desc">
-                      I lead inside sales, retention, and contact center operations for a national pest control company — and run a boutique local SEO agency on the side. Based in Eagle Mountain, UT. Raised in Fort Worth, TX.
+                  <div class="page" data-page="career">
+                    <div class="sub-heading">LEVEL SELECT</div>
+                    <div class="lvl-kicker">ROMEX — YEAR EIGHT</div>
+                    <div class="menu-item selected" data-target="career-08"><span class="left"><span class="arrow">▶</span>08 VP, CX</span></div>
+                    <div class="menu-item" data-target="career-07"><span class="left"><span class="arrow">▶</span>07 DIR. CUST OPS</span></div>
+                    <div class="menu-item" data-target="career-06"><span class="left"><span class="arrow">▶</span>06 INSIDE SALES MGR</span></div>
+                    <div class="menu-item" data-target="career-05"><span class="left"><span class="arrow">▶</span>05 INSIDE SALES REP</span></div>
+                    <div class="menu-item" data-target="career-04"><span class="left"><span class="arrow">▶</span>04 CUST. SERVICE REP</span></div>
+                    <div class="footer-hint">A OPEN LEVEL · B BACK</div>
+                  </div>
+
+                  <div class="page" data-page="career-08">
+                    <div class="lvl-kicker">LEVEL 08</div>
+                    <div class="lvl-title">VP, CUSTOMER EXPERIENCE</div>
+                    <div class="lvl-meta">ROMEX PEST · JUL 2026 — PRESENT</div>
+                    <div class="inv-cat">OBJECTIVES</div>
+                    <div class="badge-row">
+                      <span class="badge">CX</span><span class="badge">OPERATIONS</span><span class="badge">INSIDE SALES</span><span class="badge">D2D SALES</span><span class="badge">RETENTION</span>
+                    </div>
+                    <div class="inv-cat">SCOPE</div>
+                    <div class="proj-desc">I lead Inside Sales, retention, and contact center operations for a national pest control company. I’m also responsible for the day-to-day operations and success of internal door-to-door sales.</div>
+                    <div class="inv-cat">ON THIS LEVEL</div>
+                    <ul class="tiny-list">
+                      <li>Spearheaded putting the entire contact center on Zoom Contact Center and self-implemented the stack.</li>
+                      <li>AI Expert Assist, knowledge libraries, quality management (QM), and automations.</li>
+                      <li>Rolled out across Customer Service, Retention, Inside Sales, Service Operations, Finance, Accounting, and Billing.</li>
+                    </ul>
+                    <div class="footer-hint">B — BACK</div>
+                  </div>
+
+                  <div class="page" data-page="career-07">
+                    <div class="lvl-kicker">LEVEL 07</div>
+                    <div class="lvl-title">DIRECTOR, CUSTOMER OPERATIONS</div>
+                    <div class="lvl-meta">ROMEX PEST · JUL 2024 — JUL 2026</div>
+                    <div class="inv-cat">SCOPE</div>
+                    <div class="proj-desc">My task was to take what I’d done with Inside Sales and replicate it across Retention, Customer Service, and Scheduling. That involved cross-functional teams of 30+ employees, including department heads and managers.</div>
+                    <div class="footer-hint">B — BACK</div>
+                  </div>
+
+                  <div class="page" data-page="career-06">
+                    <div class="lvl-kicker">LEVEL 06</div>
+                    <div class="lvl-title">INSIDE SALES MANAGER</div>
+                    <div class="lvl-meta">ROMEX PEST · NOV 2021 — JUL 2024</div>
+                    <div class="proj-desc">I built this department from scratch. Then the job stopped being my book and started being everybody else’s — coaching, pipeline, and making a team actually run.</div>
+                    <div class="footer-hint">B — BACK</div>
+                  </div>
+
+                  <div class="page" data-page="career-05">
+                    <div class="lvl-kicker">LEVEL 05</div>
+                    <div class="lvl-title">INSIDE SALES REP</div>
+                    <div class="lvl-meta">ROMEX PEST · SEP 2019 — NOV 2021</div>
+                    <div class="proj-desc">Same company. Different scoreboard. Still conversations — just with a close at the end instead of a ticket.</div>
+                    <div class="footer-hint">B — BACK</div>
+                  </div>
+
+                  <div class="page" data-page="career-04">
+                    <div class="lvl-kicker">LEVEL 04</div>
+                    <div class="lvl-title">CUSTOMER SERVICE REP</div>
+                    <div class="lvl-meta">ROMEX PEST · APR 2019 — SEP 2019</div>
+                    <div class="proj-desc">Year one. First seat. Phones. Where the ladder started.</div>
+                    <div class="footer-hint">B — BACK</div>
+                  </div>
+
+                  <div class="page" data-page="stats">
+                    <div class="sub-heading">PLAYER STATS</div>
+                    <div class="stat-fact">TENURE<br>YEAR EIGHT AT ROMEX PEST</div>
+                    <div class="stat-fact">LADDER<br>CSR → VP, CX</div>
+                    <div class="stat-fact">HOME<br>TEXAS → UTAH</div>
+                    <div class="stat-fact">SCHOOL<br>TEXAS TECH · BA MARKETING</div>
+                    <div class="inv-cat">PLAYER PROFILE</div>
+                    <div class="stat-fact">ROLE · OPERATOR / BUILDER</div>
+                    <div class="badge-row">
+                      <span class="badge">CX LEADER</span><span class="badge">BUILDER</span><span class="badge">ENTREPRENEUR</span><span class="badge">SEO</span><span class="badge">TECH TINKERER</span>
+                    </div>
+                    <div class="inv-cat">SPECIAL ABILITIES</div>
+                    <div class="badge-row">
+                      <span class="badge">AI AUTOMATION EXPERT</span><span class="badge">CX</span><span class="badge">OPS</span><span class="badge">SALES</span><span class="badge">SEO</span><span class="badge">BUILDING</span>
                     </div>
                     <div class="footer-hint">B — BACK TO MENU</div>
                   </div>
 
-                  <!-- PROJECTS -->
                   <div class="page" data-page="projects">
-                    <div class="sub-heading">SELECTED WORK</div>
-                    <div class="proj">
-                      <div class="proj-title">&gt; NOBLE SEO</div>
-                      <div class="proj-desc">Boutique local SEO agency for DFW-area businesses.</div>
-                      <span class="proj-tag">LOCAL SEO</span><span class="proj-tag">GBP</span>
+                    <div class="sub-heading">SIDE QUESTS</div>
+                    <div class="proj-desc" style="margin-bottom:8px;">When I’m not working, I’m working on something else. This is stuff I do outside of my day job.</div>
+                    <div class="menu-item selected" data-target="proj-budgetocity"><span class="left"><span class="arrow">▶</span>BUDGETOCITY</span></div>
+                    <div class="menu-item" data-target="proj-noble"><span class="left"><span class="arrow">▶</span>NOBLE SEO</span></div>
+                    <div class="menu-item" data-target="proj-bluebonnet"><span class="left"><span class="arrow">▶</span>BLUEBONNET GROWTH</span></div>
+                    <div class="footer-hint">A OPEN · B BACK</div>
+                  </div>
+
+                  <div class="page" data-page="proj-budgetocity">
+                    <div class="lvl-title">BUDGETOCITY</div>
+                    <div class="lvl-meta">CONTENT + EMAIL + STRATEGY</div>
+                    <div class="proj-desc">A budgeting brand with a friend. Learning how to say the thing simply, then say it again in an email.</div>
+                    <div class="inv-cat">WHAT I DID</div>
+                    <div class="badge-row"><span class="badge">SEO</span><span class="badge">CONTENT</span><span class="badge">SOCIAL MEDIA</span><span class="badge">AI AUTOMATIONS</span><span class="badge">EMAIL</span><span class="badge">CONTENT CREATION</span><span class="badge">EMAIL MARKETING</span><span class="badge">PAGE ONE SEO</span></div>
+                    <div class="proj-desc"><a class="gb-link" href="https://www.budgetocity.com" target="_blank" rel="noopener noreferrer">budgetocity.com ↗</a></div>
+                    <div class="footer-hint">B — BACK</div>
+                  </div>
+
+                  <div class="page" data-page="proj-noble">
+                    <div class="lvl-title">NOBLE SEO</div>
+                    <div class="lvl-meta">FREE CONSULTING · ANY INDUSTRY*</div>
+                    <div class="proj-desc">Free consulting I’ll do because I like making a bigger impact for smaller businesses. Any industry except pest control — conflict of interest, obviously.</div>
+                    <div class="inv-cat">WHAT I DID</div>
+                    <div class="badge-row">
+                      <span class="badge">SEO</span><span class="badge">LOCAL SEO</span><span class="badge">SMALL BIZ</span><span class="badge">NO PEST CONTROL</span>
                     </div>
-                    <div class="proj">
-                      <div class="proj-title">&gt; CX OPS OVERHAUL</div>
-                      <div class="proj-desc">Rebuilt inside sales &amp; retention workflows at scale.</div>
-                      <span class="proj-tag">CONTACT CTR</span>
-                    </div>
-                    <div class="proj">
-                      <div class="proj-title">&gt; CALL CENTER ANALYTICS</div>
-                      <div class="proj-desc">Dashboards tracking conversion, AHT, and CSAT.</div>
-                      <span class="proj-tag">ANALYTICS</span>
-                    </div>
+                    <div class="proj-desc" style="margin-top:8px;"><a class="gb-link" href="https://nobleseo.co" target="_blank" rel="noopener noreferrer">nobleseo.co ↗</a></div>
+                    <div class="footer-hint">B — BACK</div>
+                  </div>
+
+                  <div class="page" data-page="proj-bluebonnet">
+                    <div class="lvl-title">BLUEBONNET GROWTH</div>
+                    <div class="lvl-meta">HYPERLOCAL TEXAS · PLAYGROUND</div>
+                    <div class="proj-desc">A hyperlocal Texas project to learn how to write copy and rank for a specific city. Also a playground to get better at SEO without pretending every experiment is a client deliverable.</div>
+                    <div class="proj-desc" style="margin-top:8px;"><a class="gb-link" href="https://bluebonnetgrowth.com" target="_blank" rel="noopener noreferrer">bluebonnetgrowth.com ↗</a></div>
+                    <div class="footer-hint">B — BACK</div>
+                  </div>
+
+                  <div class="page" data-page="toolkit">
+                    <div class="sub-heading">INVENTORY</div>
+                    <div class="inv-cat">LEADERSHIP</div>
+                    <div class="badge-row"><span class="badge">CX</span><span class="badge">OPERATIONS</span><span class="badge">SALES</span><span class="badge">STRATEGY</span><span class="badge">PEOPLE</span><span class="badge">RELATIONSHIPS</span></div>
+                    <div class="inv-cat">BUILDING</div>
+                    <div class="badge-row"><span class="badge">HTML</span><span class="badge">CSS</span><span class="badge">JAVASCRIPT</span><span class="badge">TAILWIND</span><span class="badge">GITHUB</span><span class="badge">VERCEL</span><span class="badge">CURSOR</span></div>
+                    <div class="inv-cat">GROWTH</div>
+                    <div class="badge-row"><span class="badge">SEO</span><span class="badge">LOCAL SEO</span><span class="badge">GBP</span><span class="badge">GOOGLE ADS</span><span class="badge">META ADS</span><span class="badge">GEO</span><span class="badge">GA4</span><span class="badge">EMAIL MARKETING</span><span class="badge">SHAREPOINT</span><span class="badge">LOOKER STUDIO</span></div>
+                    <div class="inv-cat">CONTENT</div>
+                    <div class="badge-row"><span class="badge">CONTENT WRITING</span><span class="badge">CONTENT CREATION</span><span class="badge">VIDEO EDITING</span><span class="badge">CAPCUT</span></div>
+                    <div class="inv-cat">AI / AUTOMATION</div>
+                    <div class="badge-row"><span class="badge">AI WORKFLOWS</span><span class="badge">LLMS</span><span class="badge">AUTOMATION</span><span class="badge">HIGHLEVEL</span><span class="badge">ZAPIER</span><span class="badge">CUSTOM REPORTING</span></div>
                     <div class="footer-hint">B — BACK TO MENU</div>
                   </div>
 
-                  <!-- SKILLS -->
-                  <div class="page" data-page="skills">
-                    <div class="sub-heading">MY TOOLKIT</div>
-                    <div class="stat-row"><span class="stat-name">CONTACT CTR</span><span class="stat-track"><span class="stat-fill" style="width:95%"></span></span></div>
-                    <div class="stat-row"><span class="stat-name">INSIDE SALES</span><span class="stat-track"><span class="stat-fill" style="width:90%"></span></span></div>
-                    <div class="stat-row"><span class="stat-name">RETENTION</span><span class="stat-track"><span class="stat-fill" style="width:88%"></span></span></div>
-                    <div class="stat-row"><span class="stat-name">LOCAL SEO</span><span class="stat-track"><span class="stat-fill" style="width:80%"></span></span></div>
-                    <div class="stat-row"><span class="stat-name">CX ANALYTICS</span><span class="stat-track"><span class="stat-fill" style="width:85%"></span></span></div>
-                    <div class="footer-hint">B — BACK TO MENU</div>
+                  <div class="page" data-page="about">
+                    <div class="portrait"><img src="/assets/images/travis-sprite.png" alt="Pixel sprite of Travis Goldston" width="56" height="94"></div>
+                    <div class="sub-heading" style="text-align:center;">ABOUT THE PLAYER</div>
+                    <div class="proj-desc">
+                      Born and raised in Tarrant County, Texas. Texas Tech alum. Husband. Dad. Friend. Bad golfer.
+                    </div>
+                    <div class="menu-item selected" data-target="about-more" style="margin-top:6px;"><span class="left"><span class="arrow">▶</span>READ MORE</span></div>
+                    <div class="footer-hint">A READ · B BACK</div>
                   </div>
 
-                  <!-- CONTACT -->
+                  <div class="page" data-page="about-more">
+                    <div class="sub-heading">ABOUT THE PLAYER</div>
+                    <div class="proj-desc">
+                      When I’m not working, I’m probably working on something else. Not because I have to. Because that’s how I like spending my time.
+                    </div>
+                    <div class="proj-desc" style="margin-top:6px;">
+                      I like learning things — especially things I can leverage. A website. SEO. AI. A new business model. Some random curiosity that turns into a domain name at 11pm.
+                    </div>
+                    <div class="proj-desc" style="margin-top:6px;">
+                      I care more about eulogy virtues than resume virtues.
+                    </div>
+                    <div class="proj-desc" style="margin-top:6px;">
+                      Based in Eagle Mountain, UT. Still a Texan. Still a bad golfer.
+                    </div>
+                    <div class="footer-hint">B — BACK</div>
+                  </div>
+
                   <div class="page" data-page="contact">
                     <div class="sub-heading">SAY HELLO</div>
                     <div class="proj-desc">
-                      SITE: travisgoldston.com<br>
-                      EMAIL: travis@travisgoldston.com<br>
-                      LINKEDIN: /in/travisgoldston<br><br>
-                      Press START to save this cartridge to your bookmarks!
+                      EMAIL:<br><a class="gb-link" href="mailto:travis@travisgoldston.com">travis@travisgoldston.com</a><br><br>
+                      LINKEDIN:<br><a class="gb-link" href="https://www.linkedin.com/in/travisgoldston" target="_blank" rel="noopener noreferrer">/in/travisgoldston</a><br><br>
+                      SITE: travisgoldston.com
                     </div>
                     <div class="footer-hint">B — BACK TO MENU</div>
+                  </div>
+
+                  <div class="page" data-page="save">
+                    <div class="sub-heading">SAVE FILE</div>
+                    <div class="proj-desc">Need the traditional version?</div>
+                    <div class="placeholder">RESUME.PDF is not in this cartridge yet. No fake résumé will spawn here. Ask Travis, or use CONTACT.</div>
+                    <div class="menu-item selected" data-target="contact"><span class="left"><span class="arrow">▶</span>GO TO CONTACT</span></div>
+                    <div class="footer-hint">A CONTACT · B BACK</div>
+                  </div>
+
+                  <div class="page" data-page="secret-golf">
+                    <div class="sub-heading">HIDDEN HOLE</div>
+                    <div class="proj-desc">You found the golf cartridge. Handicap: unknown. That’s the joke.</div>
+                    <div class="proj-desc" style="margin-top:8px;">Travis is a bad golfer. He will tell you before you have to watch.</div>
+                    <div class="badge-row"><span class="badge">FORE</span><span class="badge">PLAYER 01</span><span class="badge">TTU</span></div>
+                    <div class="footer-hint">B — BACK TO THE REAL GAME</div>
+                  </div>
+
+                  <div class="page" data-page="secret-year">
+                    <div class="sub-heading">PLAYER 01</div>
+                    <div class="proj-desc">I just started year eight and still feel like I’m in the top of the first inning.</div>
+                    <div class="proj-desc" style="margin-top:8px;">Keep going.</div>
+                    <div class="footer-hint">B — BACK</div>
                   </div>
 
                 </div>
@@ -747,14 +1074,22 @@
               <button class="round-btn b-btn" id="btnB">B</button>
               <button class="round-btn" id="btnA">A</button>
             </div>
-            <div class="speaker"><span></span><span></span><span></span><span></span><span></span></div>
           </div>
 
           <div class="pill-row">
             <div class="pill-wrap"><button class="pill-btn" id="btnSelect"></button><span class="pill-label">SELECT</span></div>
             <div class="pill-wrap"><button class="pill-btn" id="btnStart"></button><span class="pill-label">START</span></div>
           </div>
+          <div class="speaker" aria-hidden="true"><span></span><span></span><span></span><span></span><span></span></div>
 
+        </div>
+        <div class="console-back" aria-hidden="true">
+          <div class="gb-screws"><span></span><span></span></div>
+          <div class="gb-battery"><span class="gb-battery-label">BATTERY</span></div>
+          <div class="gb-stamp">Travis Goldston<small>PORTFOLIO SYSTEM</small></div>
+          <div class="gb-serial">NO. TG-2019-08</div>
+          <div class="gb-screws"><span></span><span></span></div>
+        </div>
         </div>
       </div>
     </section>
@@ -797,7 +1132,7 @@
         <div class="htp-icon">✎</div>
         <div>
           <div class="htp-title">Make yourself at home</div>
-          <div class="htp-desc">Start or Enter key</div>
+          <div class="htp-desc">Start returns to the menu</div>
         </div>
       </div>
 
@@ -816,15 +1151,17 @@
   </main>
 
 <script>
-  const menuItems = Array.from(document.querySelectorAll('.menu-item'));
   const pages = Array.from(document.querySelectorAll('.page'));
   const powerSwitch = document.getElementById('powerSwitch');
+  const screenInner = document.getElementById('screenInner');
   let selectedIndex = 0;
   let poweredOn = false;
+  let stack = ['home'];
+  let playerTaps = 0;
+  const konami = ['ArrowUp','ArrowUp','ArrowDown','ArrowDown','ArrowLeft','ArrowRight','ArrowLeft','ArrowRight','b','a'];
+  let konamiBuf = [];
 
-  function isOn(){
-    return poweredOn;
-  }
+  function isOn(){ return poweredOn; }
 
   function powerOn(){
     if(poweredOn) return;
@@ -883,47 +1220,113 @@
     else powerOn();
   });
 
+  function currentPageEl(){
+    return document.querySelector('.page.active');
+  }
+  function currentItems(){
+    const page = currentPageEl();
+    return page ? Array.from(page.querySelectorAll(':scope > .menu-item')) : [];
+  }
   function updateSelection(){
-    menuItems.forEach((item,i) => item.classList.toggle('selected', i === selectedIndex));
+    const items = currentItems();
+    items.forEach((item,i) => item.classList.toggle('selected', i === selectedIndex));
   }
   function showPage(name){
     pages.forEach(p => p.classList.toggle('active', p.dataset.page === name));
+    selectedIndex = 0;
+    updateSelection();
+    screenInner.scrollTop = 0;
   }
-  function goHome(){ showPage('home'); }
+  function openPage(name){
+    if(!name) return;
+    stack.push(name);
+    showPage(name);
+  }
+  function goHome(){
+    stack = ['home'];
+    showPage('home');
+  }
+  function goBack(){
+    if(stack.length > 1){
+      stack.pop();
+      showPage(stack[stack.length - 1]);
+    }else{
+      goHome();
+    }
+  }
   function selectCurrent(){
-    const activePage = document.querySelector('.page.active');
-    if(activePage.dataset.page === 'home'){
-      showPage(menuItems[selectedIndex].dataset.target);
+    const items = currentItems();
+    if(!items.length) return;
+    const target = items[selectedIndex] && items[selectedIndex].dataset.target;
+    if(target) openPage(target);
+  }
+  function move(dir){
+    const items = currentItems();
+    if(items.length){
+      if(dir === 'up' || dir === 'left') selectedIndex = (selectedIndex - 1 + items.length) % items.length;
+      if(dir === 'down' || dir === 'right') selectedIndex = (selectedIndex + 1) % items.length;
+      updateSelection();
+      items[selectedIndex].scrollIntoView({ block: 'nearest' });
+    }else if(dir === 'up' || dir === 'down'){
+      screenInner.scrollBy(0, dir === 'up' ? -28 : 28);
     }
   }
 
-  menuItems.forEach((item,i) => {
+  function bindPress(el, fn){
+    let last = 0;
+    const run = (e) => {
+      e.preventDefault();
+      const now = Date.now();
+      if(now - last < 280) return;
+      last = now;
+      fn();
+    };
+    el.addEventListener('pointerdown', run);
+    el.addEventListener('click', run);
+  }
+
+  document.querySelectorAll('.menu-item').forEach((item) => {
     item.addEventListener('click', () => {
       if(!isOn()) return;
-      selectedIndex = i;
+      const page = item.closest('.page');
+      if(!page || !page.classList.contains('active')) return;
+      const items = currentItems();
+      selectedIndex = Math.max(0, items.indexOf(item));
       updateSelection();
-      showPage(item.dataset.target);
+      if(item.dataset.target) openPage(item.dataset.target);
     });
   });
 
   document.querySelectorAll('.dpad-btn').forEach(btn => {
-    btn.addEventListener('click', () => {
+    bindPress(btn, () => {
       if(!isOn()) return;
-      const onHome = document.querySelector('.page.active').dataset.page === 'home';
-      if(!onHome) return;
-      const dir = btn.dataset.dir;
-      if(dir === 'up'){ selectedIndex = (selectedIndex - 1 + menuItems.length) % menuItems.length; }
-      if(dir === 'down'){ selectedIndex = (selectedIndex + 1) % menuItems.length; }
-      updateSelection();
+      move(btn.dataset.dir);
     });
   });
 
-  document.getElementById('btnA').addEventListener('click', () => { if(isOn()) selectCurrent(); });
-  document.getElementById('btnB').addEventListener('click', () => { if(isOn()) goHome(); });
-  document.getElementById('btnSelect').addEventListener('click', () => { if(isOn()) goHome(); });
-  document.getElementById('btnStart').addEventListener('click', () => { if(isOn()) showPage('contact'); });
+  bindPress(document.getElementById('btnA'), () => { if(isOn()) selectCurrent(); });
+  bindPress(document.getElementById('btnB'), () => { if(isOn()) goBack(); });
+  bindPress(document.getElementById('btnSelect'), () => { if(isOn()) openPage('save'); });
+  bindPress(document.getElementById('btnStart'), () => { if(isOn()) goHome(); });
+
+  document.getElementById('playerTag').addEventListener('click', () => {
+    if(!isOn()) return;
+    playerTaps += 1;
+    if(playerTaps >= 8){
+      playerTaps = 0;
+      openPage('secret-year');
+    }
+  });
 
   document.addEventListener('keydown', (e) => {
+    const key = e.key.length === 1 ? e.key.toLowerCase() : e.key;
+    konamiBuf.push(key === 'z' ? 'a' : key === 'x' ? 'b' : key);
+    konamiBuf = konamiBuf.slice(-konami.length);
+    if(konami.every((k, i) => konamiBuf[i] === k) && isOn()){
+      openPage('secret-golf');
+      konamiBuf = [];
+    }
+
     if(!isOn()){
       if(e.key === 'Enter' || e.key === ' '){
         e.preventDefault();
@@ -931,11 +1334,15 @@
       }
       return;
     }
-    const onHome = document.querySelector('.page.active').dataset.page === 'home';
-    if(e.key === 'ArrowUp' && onHome){ selectedIndex = (selectedIndex - 1 + menuItems.length) % menuItems.length; updateSelection(); }
-    if(e.key === 'ArrowDown' && onHome){ selectedIndex = (selectedIndex + 1) % menuItems.length; updateSelection(); }
-    if(e.key === 'Enter' || e.key.toLowerCase() === 'z'){ selectCurrent(); }
-    if(e.key === 'Backspace' || e.key.toLowerCase() === 'x'){ goHome(); }
+    if(['ArrowUp','ArrowDown','ArrowLeft','ArrowRight',' ','Backspace'].includes(e.key) || key === 'w' || key === 'a' || key === 's' || key === 'd'){
+      e.preventDefault();
+    }
+    if(e.key === 'ArrowUp' || key === 'w') move('up');
+    if(e.key === 'ArrowDown' || key === 's') move('down');
+    if(e.key === 'ArrowLeft' || key === 'a') move('left');
+    if(e.key === 'ArrowRight' || key === 'd') move('right');
+    if(e.key === 'Enter' || key === 'z') selectCurrent();
+    if(e.key === 'Escape' || e.key === 'Backspace' || key === 'x') goBack();
   });
 
   updateSelection();
