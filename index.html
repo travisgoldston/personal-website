@@ -377,7 +377,7 @@
     width: 320px;
     background: linear-gradient(160deg, #3a3a40 0%, #1c1c20 32%, #121214 68%, #070708 100%);
     border-radius: 16px 16px 34px 34px;
-    padding: 16px 16px 40px;
+    padding: 16px 16px 48px;
     position: relative;
     box-shadow:
       0 1px 0 rgba(255,255,255,0.16) inset,
@@ -591,8 +591,8 @@
   .controls-row{
     display:flex;
     justify-content:space-between;
-    align-items:center;
-    padding: 16px 36px 4px 8px;
+    align-items:flex-start;
+    padding: 12px 28px 22px 8px;
     position:relative;
     z-index: 1;
   }
@@ -618,10 +618,11 @@
     display:flex;
     align-items:flex-end;
     gap:10px;
-    transform: rotate(-18deg);
+    transform: rotate(-14deg);
     position: relative;
     z-index: 2;
     flex-shrink: 0;
+    margin-top: 6px;
   }
   .round-btn{
     width:32px; height:32px;
@@ -639,11 +640,11 @@
 
   .pill-row{
     display:flex;
-    justify-content:center;
-    gap:16px;
-    padding: 14px 52px 10px 8px;
+    justify-content:flex-start;
+    gap:22px;
+    padding: 4px 72px 18px 36px;
     position: relative;
-    z-index: 1;
+    z-index: 2;
   }
   .pill-wrap{ display:flex; flex-direction:column; align-items:center; gap:4px; }
   .pill-btn{
@@ -660,8 +661,8 @@
 
   .speaker{
     position:absolute;
-    right: 16px;
-    bottom: 14px;
+    right: 18px;
+    bottom: 12px;
     display:flex;
     gap:3px;
     transform: rotate(-18deg);
@@ -761,14 +762,14 @@
   }
   @media (max-width: 640px){
     .console{ width: min(94vw, 360px); }
-    .controls-row{ gap: 14px; padding: 16px 44px 4px 6px; }
+    .controls-row{ gap: 14px; padding: 12px 48px 28px 6px; }
     .dpad{ width: 118px; height: 118px; }
     .dpad .up,.dpad .down{ width: 36px; height: 44px; left: 41px; }
     .dpad .left,.dpad .right{ width: 44px; height: 36px; top: 41px; }
     .dpad .center{ width: 36px; height: 36px; top: 41px; left: 41px; }
     .round-btn{ width: 42px; height: 42px; }
-    .pill-row{ padding: 14px 58px 12px 6px; }
-    .speaker{ right: 12px; bottom: 12px; }
+    .pill-row{ padding: 8px 80px 22px 28px; gap: 24px; }
+    .speaker{ right: 14px; bottom: 10px; }
     .device-wrap{ transform: rotate(-2deg); }
   }
   @media (prefers-reduced-motion: reduce){
@@ -920,7 +921,7 @@
 
                   <div class="page" data-page="stats">
                     <div class="sub-heading">PLAYER STATS</div>
-                    <div class="stat-fact">TENURE<br>YEAR EIGHT AT ROMEX</div>
+                    <div class="stat-fact">TENURE<br>YEAR EIGHT AT ROMEX PEST</div>
                     <div class="stat-fact">LADDER<br>CSR → VP, CX</div>
                     <div class="stat-fact">HOME<br>TEXAS → UTAH</div>
                     <div class="stat-fact">SCHOOL<br>TEXAS TECH · BA MARKETING</div>
@@ -950,8 +951,7 @@
                     <div class="lvl-meta">CONTENT + EMAIL + STRATEGY</div>
                     <div class="proj-desc">A budgeting brand with a friend. Learning how to say the thing simply, then say it again in an email.</div>
                     <div class="inv-cat">WHAT I DID</div>
-                    <div class="placeholder">Social media management. Content creation. AI automations. Email marketing. SEO plus content to page one of Google in this niche.</div>
-                    <div class="badge-row"><span class="badge">SEO</span><span class="badge">CONTENT</span><span class="badge">SOCIAL MEDIA</span><span class="badge">AI AUTOMATIONS</span><span class="badge">EMAIL</span></div>
+                    <div class="badge-row"><span class="badge">SEO</span><span class="badge">CONTENT</span><span class="badge">SOCIAL MEDIA</span><span class="badge">AI AUTOMATIONS</span><span class="badge">EMAIL</span><span class="badge">CONTENT CREATION</span><span class="badge">EMAIL MARKETING</span><span class="badge">PAGE ONE SEO</span></div>
                     <div class="proj-desc"><a class="gb-link" href="https://www.budgetocity.com" target="_blank" rel="noopener noreferrer">budgetocity.com ↗</a></div>
                     <div class="footer-hint">B — BACK</div>
                   </div>
@@ -983,9 +983,11 @@
                     <div class="inv-cat">BUILDING</div>
                     <div class="badge-row"><span class="badge">HTML</span><span class="badge">CSS</span><span class="badge">JAVASCRIPT</span><span class="badge">TAILWIND</span><span class="badge">GITHUB</span><span class="badge">VERCEL</span><span class="badge">CURSOR</span></div>
                     <div class="inv-cat">GROWTH</div>
-                    <div class="badge-row"><span class="badge">SEO</span><span class="badge">LOCAL SEO</span><span class="badge">GBP</span><span class="badge">GOOGLE ADS</span><span class="badge">META ADS</span><span class="badge">GEO</span><span class="badge">GA4</span><span class="badge">EMAIL MARKETING</span><span class="badge">COPYWRITING</span><span class="badge">CONTENT</span><span class="badge">HIGHLEVEL</span><span class="badge">ZAPIER</span></div>
+                    <div class="badge-row"><span class="badge">SEO</span><span class="badge">LOCAL SEO</span><span class="badge">GBP</span><span class="badge">GOOGLE ADS</span><span class="badge">META ADS</span><span class="badge">GEO</span><span class="badge">GA4</span><span class="badge">EMAIL MARKETING</span><span class="badge">SHAREPOINT</span><span class="badge">LOOKER STUDIO</span></div>
+                    <div class="inv-cat">CONTENT</div>
+                    <div class="badge-row"><span class="badge">CONTENT WRITING</span><span class="badge">CONTENT CREATION</span><span class="badge">VIDEO EDITING</span><span class="badge">CAPCUT</span></div>
                     <div class="inv-cat">AI / AUTOMATION</div>
-                    <div class="badge-row"><span class="badge">AI WORKFLOWS</span><span class="badge">LLMS</span><span class="badge">AUTOMATION</span></div>
+                    <div class="badge-row"><span class="badge">AI WORKFLOWS</span><span class="badge">LLMS</span><span class="badge">AUTOMATION</span><span class="badge">HIGHLEVEL</span><span class="badge">ZAPIER</span><span class="badge">CUSTOM REPORTING</span></div>
                     <div class="footer-hint">B — BACK TO MENU</div>
                   </div>
 
@@ -1006,6 +1008,9 @@
                     </div>
                     <div class="proj-desc" style="margin-top:6px;">
                       I like learning things — especially things I can leverage. A website. SEO. AI. A new business model. Some random curiosity that turns into a domain name at 11pm.
+                    </div>
+                    <div class="proj-desc" style="margin-top:6px;">
+                      I care more about eulogy virtues than resume virtues.
                     </div>
                     <div class="proj-desc" style="margin-top:6px;">
                       Based in Eagle Mountain, UT. Still a Texan. Still a bad golfer.
