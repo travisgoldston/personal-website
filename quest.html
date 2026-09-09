@@ -301,6 +301,7 @@
     </section>
     <p class="kicker">D-pad to run. A to hike. B to go home.</p>
   </div>
+<script src="/assets/js/pocket-sfx.js"></script>
 <script>
   const TILE = 16;
   const COLS = 15;
@@ -334,6 +335,11 @@
   let moveLock = false;
   let flash = 0;
   let invuln = 0;
+
+  function sfx(name){
+    const bank = window.pocketSfx;
+    if(bank && typeof bank[name] === 'function') bank[name]();
+  }
 
   function goHome(){
     window.location.href = '/index.html';
@@ -526,12 +532,12 @@
   }
 
   document.querySelectorAll('.dpad-btn').forEach(btn => {
-    bindPress(btn, () => hop(...dirMap[btn.dataset.dir]));
+    bindPress(btn, () => { sfx('dpad'); hop(...dirMap[btn.dataset.dir]); });
   });
-  bindPress(document.getElementById('btnA'), pressA);
-  bindPress(document.getElementById('btnB'), goHome);
-  bindPress(document.getElementById('btnSelect'), goHome);
-  bindPress(document.getElementById('btnStart'), pressA);
+  bindPress(document.getElementById('btnA'), () => { sfx('a'); pressA(); });
+  bindPress(document.getElementById('btnB'), () => { sfx('b'); goHome(); });
+  bindPress(document.getElementById('btnSelect'), () => { sfx('select'); goHome(); });
+  bindPress(document.getElementById('btnStart'), () => { sfx('start'); pressA(); });
 
   document.addEventListener('keydown', (e) => {
     const key = e.key.length === 1 ? e.key.toLowerCase() : e.key;
@@ -541,10 +547,11 @@
         ArrowUp: [0,-1], ArrowDown: [0,1], ArrowLeft: [-1,0], ArrowRight: [1,0],
         w: [0,-1], a: [-1,0], s: [0,1], d: [1,0]
       };
+      sfx('dpad');
       hop(...(map[key] || [0,0]));
     }
-    if(e.key === 'Enter' || key === 'z'){ e.preventDefault(); pressA(); }
-    if(e.key === 'Backspace' || key === 'x'){ e.preventDefault(); goHome(); }
+    if(e.key === 'Enter' || key === 'z'){ e.preventDefault(); sfx('a'); pressA(); }
+    if(e.key === 'Backspace' || key === 'x'){ e.preventDefault(); sfx('b'); goHome(); }
   });
 
   resetTacklers();

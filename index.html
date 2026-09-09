@@ -1375,6 +1375,7 @@
 
   </main>
 
+<script src="/assets/js/pocket-sfx.js"></script>
 <script>
   const pages = Array.from(document.querySelectorAll('.page'));
   const powerSwitch = document.getElementById('powerSwitch');
@@ -1387,10 +1388,16 @@
   let konamiBuf = [];
 
   function isOn(){ return poweredOn; }
+  function sfx(name){
+    const bank = window.pocketSfx;
+    if(bank && typeof bank[name] === 'function') bank[name]();
+  }
 
   function powerOn(){
     if(poweredOn) return;
     poweredOn = true;
+    sfx('unlock');
+    sfx('powerOn');
     powerSwitch.classList.add('is-on');
     document.body.classList.remove('spinning', 'screen-off');
     const fromBoot = document.body.classList.contains('boot');
@@ -1415,6 +1422,7 @@
     powerSwitch.classList.remove('is-on');
     document.body.classList.remove('on');
     document.body.classList.add('screen-off');
+    sfx('powerOff');
   }
 
   function skipBoot(){
@@ -1506,8 +1514,10 @@
       if(dir === 'down' || dir === 'right') selectedIndex = (selectedIndex + 1) % items.length;
       updateSelection();
       items[selectedIndex].scrollIntoView({ block: 'nearest' });
+      sfx('dpad');
     }else if(dir === 'up' || dir === 'down'){
       screenInner.scrollBy(0, dir === 'up' ? -28 : 28);
+      sfx('dpad');
     }
   }
 
@@ -1532,7 +1542,10 @@
       const items = currentItems();
       selectedIndex = Math.max(0, items.indexOf(item));
       updateSelection();
-      if(item.dataset.target) openPage(item.dataset.target);
+      if(item.dataset.target){
+        sfx('a');
+        openPage(item.dataset.target);
+      }
     });
   });
 
@@ -1543,10 +1556,10 @@
     });
   });
 
-  bindPress(document.getElementById('btnA'), () => { if(isOn()) selectCurrent(); });
-  bindPress(document.getElementById('btnB'), () => { if(isOn()) goBack(); });
-  bindPress(document.getElementById('btnSelect'), () => { if(isOn()) openPage('save'); });
-  bindPress(document.getElementById('btnStart'), () => { if(isOn()) goHome(); });
+  bindPress(document.getElementById('btnA'), () => { if(isOn()){ sfx('a'); selectCurrent(); } });
+  bindPress(document.getElementById('btnB'), () => { if(isOn()){ sfx('b'); goBack(); } });
+  bindPress(document.getElementById('btnSelect'), () => { if(isOn()){ sfx('select'); openPage('save'); } });
+  bindPress(document.getElementById('btnStart'), () => { if(isOn()){ sfx('start'); goHome(); } });
 
   document.getElementById('playerTag').addEventListener('click', () => {
     if(!isOn()) return;
@@ -1569,6 +1582,7 @@
     if(!isOn()){
       if(e.key === 'Enter' || e.key === ' '){
         e.preventDefault();
+        sfx('unlock');
         powerOn();
       }
       return;
@@ -1580,8 +1594,8 @@
     if(e.key === 'ArrowDown' || key === 's') move('down');
     if(e.key === 'ArrowLeft' || key === 'a') move('left');
     if(e.key === 'ArrowRight' || key === 'd') move('right');
-    if(e.key === 'Enter' || key === 'z') selectCurrent();
-    if(e.key === 'Escape' || e.key === 'Backspace' || key === 'x') goBack();
+    if(e.key === 'Enter' || key === 'z'){ sfx('a'); selectCurrent(); }
+    if(e.key === 'Escape' || e.key === 'Backspace' || key === 'x'){ sfx('b'); goBack(); }
   });
 
   updateSelection();
